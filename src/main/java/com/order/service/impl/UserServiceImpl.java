@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PageUtils querylist(final Query query) {
+	public PageUtils queryList(final Query query) {
 		Specification<UserEntity> specification = new Specification<UserEntity>() {
 			@Override
 			public Predicate toPredicate(Root<UserEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {

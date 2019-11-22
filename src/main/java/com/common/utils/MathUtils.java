@@ -12,8 +12,8 @@ import java.math.BigInteger;
 public class MathUtils {
 
 	public static BigDecimal getBigDecimal(Object value) {
-		BigDecimal ret = null;
-		if(value != null) {
+		BigDecimal ret = BigDecimal.ZERO;
+		if(value != null && !"".equals(value)) {
 			if(value instanceof BigDecimal) {
 				ret = (BigDecimal) value;
 			} else if(value instanceof String) {

@@ -21,5 +21,5 @@ public interface UserService {
 	
 	R deleteUser(Long id);
 	
-	PageUtils querylist(Query query);
+	PageUtils queryList(Query query);
 }

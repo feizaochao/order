@@ -29,7 +29,7 @@ public class UserController {
 	@RequestMapping(value = "/list")
 	public R queryList(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
-		PageUtils pageUtils = userService.querylist(query);
+		PageUtils pageUtils = userService.queryList(query);
 		return R.ok().put("data", pageUtils);
 	}
 	

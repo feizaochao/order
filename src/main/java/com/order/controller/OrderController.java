@@ -42,9 +42,9 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/list")
-	public R quertList(@RequestParam Map<String, Object> params) {
+	public R queryList(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
-		PageUtils page = orderService.quertList(query);
+		PageUtils page = orderService.queryList(query);
 		return R.ok().put("data", page);
 	}
 }
