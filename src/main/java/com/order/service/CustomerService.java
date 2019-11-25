@@ -21,4 +21,6 @@ public interface CustomerService {
 	R deleteCustomer(Long id);
 	
 	PageUtils queryList(Query query);
+
+	R queryOne(Long id);
 }

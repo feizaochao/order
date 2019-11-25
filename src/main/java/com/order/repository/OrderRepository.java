@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.order.entity.OrderEntity;
 
+import java.util.List;
+
 /**
 * @Description: TODO
 * @author Robb G C LUO
@@ -13,4 +15,5 @@ import com.order.entity.OrderEntity;
 */
 public interface OrderRepository extends JpaRepository<OrderEntity, Long>, JpaSpecificationExecutor<OrderEntity> {
 
+    List<OrderEntity> findByCustomerId(Long customerId);
 }

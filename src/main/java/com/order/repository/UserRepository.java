@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, JpaSpec
 	Optional<UserEntity> findByName(String name);
 	
 	UserEntity findOneByName(String name);
+
+	UserEntity findOneById(Long id);
 }

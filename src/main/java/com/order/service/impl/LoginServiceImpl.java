@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import com.modules.sys.service.SysUserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,8 @@ public class LoginServiceImpl implements LoginService {
 	private RoleService roleService;
 	@Autowired
 	private MenuService menuService;
+	@Autowired
+	private SysUserTokenService tokenService;
 	
 	@Override
 	public R login(String name, String password) {
@@ -39,11 +42,15 @@ public class LoginServiceImpl implements LoginService {
 		if(user == null || !password.equals(user.getPassword())) {
 			return R.error("账号或密码不正确");
 		}
-		
-		// 2.查询账号角色和权限
+
+		// 2.生成Token
+		tokenService.createToken(user.getId());
+
+		// 3.查询账号角色和权限
 		Long roleId = roleService.queryRoleByUserId(user.getId());
 		List<Map<String, Object>> menuList = menuService.queryListByRoleId(roleId);
-		
+
+
 		return R.ok().put("menuList", menuList);
 	}
 

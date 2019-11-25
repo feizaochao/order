@@ -3,10 +3,7 @@ package com.order.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.common.utils.PageUtils;
 import com.common.utils.Query;
@@ -42,9 +39,14 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/list")
-	public R queryList(Map<String, Object> params) {
+	public R queryList(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		PageUtils page = customerService.queryList(query);
 		return R.ok().put("data", page);
+	}
+
+	@PostMapping(value = "/one")
+	public R queryOne(Long id) {
+		return customerService.queryOne(id);
 	}
 }

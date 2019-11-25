@@ -21,4 +21,6 @@ public interface OrderService {
 	R deleteOrder(Long id);
 	
 	PageUtils queryList(Query query);
+
+	R queryOne(Long id);
 }
