@@ -1,6 +1,6 @@
 package com.order.service;
 
-import com.common.utils.R;
+import com.common.utils.ResultUtils;
 
 /**
 * @Description: TODO
@@ -10,5 +10,5 @@ import com.common.utils.R;
 */
 public interface LoginService {
 
-	R login(String name, String password);
+	ResultUtils login(String name, String password);
 }

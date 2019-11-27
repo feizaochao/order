@@ -142,8 +142,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public R queryOne(Long id) {
-		CustomerEntity customer = em.find(CustomerEntity.class, id);
+	public R queryOne(final Query query) {
+		Long customerId = Long.valueOf((String) query.get("id"));
+		CustomerEntity customer = em.find(CustomerEntity.class, customerId);
 		if (null == customer) {
 			return R.error();
 		}
@@ -152,7 +153,32 @@ public class CustomerServiceImpl implements CustomerService {
 			customer.setAreaId(area.getId());
 			customer.setAreaName(area.getAreaName());
 		}
-		return R.ok().put("data", customer);
+		R r = R.ok().put("customerData", customer);
+		// 获取该客户订单信息
+		Specification<OrderEntity> specification = new Specification<OrderEntity>() {
+			@Override
+			public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> q, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<>();
+				predicates.add(cb.equal(root.get("customerId"), customerId));
+				return cb.and(predicates.toArray(new Predicate[0]));
+			}
+		};
+		List<Order> orders = new ArrayList<>();
+		orders.add(new Order(Direction.DESC, "createTime"));
+		Pageable pageable = new PageRequest(query.getPage() - 1, query.getLimit(), new Sort(orders));
+		Page<OrderEntity> page = orderRepository.findAll(specification, pageable);
+
+		List<OrderEntity> list = page.getContent();
+		for(OrderEntity order : list) {
+			ContractEntity contract = em.find(ContractEntity.class, order.getContractId());
+			order.setCustomer(customer);
+			order.setContract(contract);
+			AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
+			order.setAreaName(area.getAreaName());
+		}
+		PageUtils pageUtils = new PageUtils(list, Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
+		r.put("orderData", pageUtils);
+		return r;
 	}
 
 	private void buildCustomer(CustomerEntity customer, Map<String, Object> params) {

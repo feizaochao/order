@@ -1,16 +1,15 @@
 package com.order.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import com.common.utils.*;
+import com.order.entity.OrderEntity;
+import com.order.entity.UserEntity;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.common.utils.PageUtils;
-import com.common.utils.Query;
-import com.common.utils.R;
 import com.order.service.UserService;
 
 /**
@@ -19,32 +18,39 @@ import com.order.service.UserService;
 * @date 2019年11月18日
 * @version v1.0
 */
+@Api(tags = "用户接口")
 @RestController
 @RequestMapping("/user")
 public class UserController {
  
 	@Autowired
 	private UserService userService;
-	
-	@RequestMapping(value = "/list")
-	public R queryList(@RequestParam Map<String, Object> params) {
-		Query query = new Query(params);
-		PageUtils pageUtils = userService.queryList(query);
-		return R.ok().put("data", pageUtils);
+
+	@ApiOperation("获取用户列表")
+	@PostMapping(value = "/list")
+	public ResultUtils queryList(@RequestBody PageParams params) {
+		Query query = new Query(params.toMap());
+		PageUtils2<UserEntity> pageUtils = userService.queryList(query);
+		ResultUtils result = ResultUtils.ok();
+		result.setData(pageUtils);
+		return result;
 	}
-	
-	@RequestMapping(value = "/add")
-	public R addUser(@RequestParam Map<String, Object> params) {
-		return userService.addUser((String)params.get("name"), (String)params.get("password"), Long.valueOf((String) params.get("roleId")));
+
+	@ApiOperation("用户新增")
+	@PostMapping(value = "/add")
+	public ResultUtils addUser(@RequestBody UserEntity user) {
+		return userService.addUser(user.getName(), user.getPassword(), user.getRoleId());
 	}
-	
-	@RequestMapping(value = "/edit")
-	public R editUser(@RequestParam Map<String, Object> params) {
-		return userService.editUser(Long.valueOf((String) params.get("userId")), (String)params.get("name"), (String)params.get("password"), Long.valueOf((String) params.get("roleId")));
+
+	@ApiOperation("用户编辑")
+	@PostMapping(value = "/edit")
+	public ResultUtils editUser(@RequestBody UserEntity user) {
+		return userService.editUser(user.getId(), user.getName(), user.getPassword(), user.getRoleId());
 	}
-	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public R deleteUser(Long userId) {
+
+	@ApiOperation("用户删除")
+	@PostMapping(value = "/delete")
+	public ResultUtils deleteUser(Long userId) {
 		return userService.deleteUser(userId);
 	}
 }

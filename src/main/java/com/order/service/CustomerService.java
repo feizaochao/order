@@ -22,5 +22,5 @@ public interface CustomerService {
 	
 	PageUtils queryList(Query query);
 
-	R queryOne(Long id);
+	R queryOne(Query query);
 }

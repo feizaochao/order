@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import com.common.utils.ResultUtils;
 import com.modules.sys.service.SysUserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,11 +37,11 @@ public class LoginServiceImpl implements LoginService {
 	private SysUserTokenService tokenService;
 	
 	@Override
-	public R login(String name, String password) {
+	public ResultUtils login(String name, String password) {
 		UserEntity user = userService.queryUserByName(name);
 		// 1.查询账号信息是否正确
 		if(user == null || !password.equals(user.getPassword())) {
-			return R.error("账号或密码不正确");
+			return ResultUtils.error(201, "");
 		}
 
 		// 2.生成Token
@@ -51,7 +52,7 @@ public class LoginServiceImpl implements LoginService {
 		List<Map<String, Object>> menuList = menuService.queryListByRoleId(roleId);
 
 
-		return R.ok().put("menuList", menuList);
+		return ResultUtils.success("", menuList);
 	}
 
 }

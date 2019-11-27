@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.common.utils.R;
+import com.common.utils.ResultUtils;
 
 /**
 * @Description: TODO
@@ -13,15 +14,15 @@ import com.common.utils.R;
 */
 public interface RoleService {
 
-	R addRole(String name);
-	
-	R editRole(Long id, String name);
-	
-	R deleteRole(Long id);
+	ResultUtils addRole(String name);
+
+	ResultUtils editRole(Long id, String name);
+
+	ResultUtils deleteRole(Long id);
 	
 	List<Map<String, Object>> queryList();
 	
 	Long queryRoleByUserId(Long userId);
-	
-	R saveMenus(Long roleId, Long[] menuIds);
+
+	ResultUtils saveMenus(Long roleId, Long[] menuIds);
 }

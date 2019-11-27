@@ -1,5 +1,8 @@
 package com.order.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,14 +16,17 @@ import javax.persistence.MappedSuperclass;
 * @version V1.0
 */
 @MappedSuperclass
+@ApiModel
 public class BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 8567638791949702216L;
 
 	@Column(name = "create_time", length = 10, nullable = true)
+	@ApiModelProperty(value = "新增时间", dataType = "date")
 	private Date createTime;
 	
 	@Column(name = "update_time", length = 10, nullable = true)
+	@ApiModelProperty(value = "修改时间", dataType = "date")
 	private Date updateTime;
 
 	public Date getCreateTime() {

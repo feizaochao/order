@@ -2,11 +2,12 @@ package com.order.controller;
 
 import java.util.Map;
 
+import com.common.utils.ResultUtils;
+import com.order.entity.RoleEntity;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.common.utils.R;
 import com.order.service.MenuService;
@@ -18,6 +19,7 @@ import com.order.service.RoleService;
 * @date 2019年11月7日
 * @version V1.0
 */
+@Api(tags = "角色和权限接口")
 @RestController
 @RequestMapping(value = "/role")
 public class RoleController {
@@ -26,29 +28,34 @@ public class RoleController {
 	private RoleService roleService;
 	@Autowired
 	private MenuService menuService;
-	
-	@RequestMapping(value = "/add")
-	public R addRole(@RequestParam Map<String, Object> params) {
-		return roleService.addRole((String)params.get("name"));
+
+	@ApiOperation("添加角色")
+	@PostMapping(value = "/add")
+	public ResultUtils addRole(@RequestBody RoleEntity role) {
+		return roleService.addRole(role.getName());
 	}
-	
-	@RequestMapping(value = "/edit")
-	public R editRole(@RequestParam Map<String, Object> params) {
-		return roleService.editRole(Long.valueOf((String) params.get("roleId")), (String)params.get("name"));
+
+	@ApiOperation("编辑角色")
+	@PostMapping(value = "/edit")
+	public ResultUtils editRole(@RequestBody RoleEntity role) {
+		return roleService.editRole(role.getId(), role.getName());
 	}
-	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public R deleteRole(Long id) {
+
+	@ApiOperation("删除角色")
+	@PostMapping(value = "/delete")
+	public ResultUtils deleteRole(Long id) {
 		return roleService.deleteRole(id);
 	}
-	
-	@RequestMapping(value = "/list")
-	public R queryList() {
-		return R.ok().put("data", roleService.queryList());
+
+	@ApiOperation("获取角色列表")
+	@GetMapping(value = "/list")
+	public ResultUtils queryList() {
+		return ResultUtils.success("", roleService.queryList());
 	}
-	
-	@RequestMapping(value = "/save_authority", method = RequestMethod.POST)
-	public R saveMenus(Long roleId, Long[] menuIds) {
+
+	@ApiOperation("保存角色菜单信息")
+	@PostMapping(value = "/save_authority")
+	public ResultUtils saveMenus(Long roleId, Long[] menuIds) {
 		return roleService.saveMenus(roleId, menuIds);
 	}
 }

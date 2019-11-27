@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import com.common.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,36 +46,36 @@ public class AreaServiceImpl implements AreaService {
 	private AreaRepository areaRepository;
 	
 	@Override
-	public R addArea(Map<String, Object> params) {
-		AreaEntity area = new AreaEntity();
-		area.setAreaNo((String) params.get("areaNo"));
-		area.setAreaName((String) params.get("areaName"));
-		area.setCreateTime(new Date());
-		em.persist(area);
-		return R.ok("保存成功");
+	public ResultUtils addArea(AreaEntity area) {
+		AreaEntity areaEntity = new AreaEntity();
+		areaEntity.setAreaNo(area.getAreaNo());
+		areaEntity.setAreaName(area.getAreaName());
+		areaEntity.setCreateTime(new Date());
+		em.persist(areaEntity);
+		return ResultUtils.error(201, "");
 	}
 
 	@Override
-	public R editArea(Map<String, Object> params) {
-		AreaEntity area = em.find(AreaEntity.class, Long.valueOf((String) params.get("id")));
+	public ResultUtils editArea(AreaEntity area) {
+		AreaEntity areaEntity = em.find(AreaEntity.class, area.getId());
 		if(null == area) {
-			return R.error("修改失败");
+			return ResultUtils.error(201, "");
 		}
-		area.setAreaNo((String) params.get("areaNo"));
-		area.setAreaName((String) params.get("areaName"));
-		area.setUpdateTime(new Date());
-		em.merge(area);
-		return R.ok("修改成功");
+		areaEntity.setAreaNo(area.getAreaNo());
+		areaEntity.setAreaName(area.getAreaName());
+		areaEntity.setUpdateTime(new Date());
+		em.merge(areaEntity);
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R deleteArea(Long id) {
+	public ResultUtils deleteArea(Long id) {
 		AreaEntity area = em.find(AreaEntity.class, id);
 		if(null == area) {
-			return R.error("删除失败");
+			return ResultUtils.error(201, "");
 		}
 		em.remove(area);
-		return R.ok("删除成功");
+		return ResultUtils.ok();
 	}
 
 	@Override
@@ -95,9 +96,8 @@ public class AreaServiceImpl implements AreaService {
 	}
 
 	@Override
-	public R queryAll() {
+	public ResultUtils queryAll() {
 		List<AreaEntity> list = areaRepository.findAll();
-		return R.ok().put("data", list); 
+		return ResultUtils.success("", list);
 	}
-
 }

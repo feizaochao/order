@@ -2,6 +2,7 @@ package com.order.controller;
 
 import java.util.Map;
 
+import io.swagger.annotations.ApiImplicitParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,22 +24,22 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	@RequestMapping(value = "/add")
+	@GetMapping(value = "/add")
 	public R addOrder(@RequestParam Map<String, Object> params) {
 		return orderService.addOrder(params);
 	}
 	
-	@RequestMapping(value = "/edit")
+	@GetMapping(value = "/edit")
 	public R editOrder(@RequestParam Map<String, Object> params) {
 		return orderService.editOrder(params);
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@PostMapping(value = "/delete")
 	public R deleteOrder(Long id) {
 		return orderService.deleteOrder(id);
 	}
 	
-	@RequestMapping(value = "/list")
+	@GetMapping(value = "/list")
 	public R queryList(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		PageUtils page = orderService.queryList(query);

@@ -48,20 +48,8 @@ public class ContractServiceImpl implements ContractService {
 	@Override
 	public R addContract(Map<String, Object> params) {
 		ContractEntity contract = new ContractEntity();
-		contract.setSiteName((String) params.get("siteName"));
-		contract.setContractName((String) params.get("contractName"));
-		contract.setContractNo((String) params.get("contractNo"));
-		contract.setPartyA((String) params.get("partyA"));
-		contract.setPartyB((String) params.get("partyB"));
-		contract.setContractStartTime((String) params.get("contractStartTime"));
-		contract.setContractEndTime((String) params.get("contractEndTime"));
-		contract.setElectricityFee(MathUtils.getBigDecimal(params.get("electricityFee")));
-		contract.setStartTime((String) params.get("startTime"));
-		contract.setEndTime((String) params.get("endTime"));
-		contract.setElectricityCharge(MathUtils.getBigDecimal(params.get("electricityCharge")));
-		contract.setElectricitySubmitType((int) params.get("electricitySubmitType"));
-		contract.setElectricityPaid(MathUtils.getBigDecimal(params.get("electricityPaid")));
-		contract.setPaidTime((String) params.get("paidTime"));
+		buildContract(contract, params);
+		contract.setCreateTime(new Date());
 		em.persist(contract);
 		return R.ok();
 	}
@@ -72,20 +60,8 @@ public class ContractServiceImpl implements ContractService {
 		if(null == contract) {
 			return R.error("修改失败");
 		}
-		contract.setSiteName((String) params.get("siteName"));
-		contract.setContractName((String) params.get("contractName"));
-		contract.setContractNo((String) params.get("contractNo"));
-		contract.setPartyA((String) params.get("partyA"));
-		contract.setPartyB((String) params.get("partyB"));
-		contract.setContractStartTime((String) params.get("contractStartTime"));
-		contract.setContractEndTime((String) params.get("contractEndTime"));
-		contract.setElectricityFee(MathUtils.getBigDecimal(params.get("electricityFee")));
-		contract.setStartTime((String) params.get("startTime"));
-		contract.setEndTime((String) params.get("endTime"));
-		contract.setElectricityCharge(MathUtils.getBigDecimal(params.get("electricityCharge")));
-		contract.setElectricitySubmitType((int) params.get("electricitySubmitType"));
-		contract.setElectricityPaid(MathUtils.getBigDecimal(params.get("electricityPaid")));
-		contract.setPaidTime((String) params.get("paidTime"));
+		buildContract(contract, params);
+		contract.setUpdateTime(new Date());
 		em.merge(contract);
 		return R.ok();
 	}
@@ -117,4 +93,29 @@ public class ContractServiceImpl implements ContractService {
 		return pageUtils;
 	}
 
+	@Override
+	public R queryOne(Long id) {
+		ContractEntity contract = em.find(ContractEntity.class, id);
+		if(null == contract) {
+			return R.error();
+		}
+		return R.ok().put("data", contract);
+	}
+
+	private void buildContract(ContractEntity contract, Map<String, Object> params) {
+		contract.setSiteName((String) params.get("siteName"));
+		contract.setContractName((String) params.get("contractName"));
+		contract.setContractNo((String) params.get("contractNo"));
+		contract.setPartyA((String) params.get("partyA"));
+		contract.setPartyB((String) params.get("partyB"));
+		contract.setContractStartTime((String) params.get("contractStartTime"));
+		contract.setContractEndTime((String) params.get("contractEndTime"));
+		contract.setElectricityFee(MathUtils.getBigDecimal(params.get("electricityFee")));
+		contract.setStartTime((String) params.get("startTime"));
+		contract.setEndTime((String) params.get("endTime"));
+		contract.setElectricityCharge(MathUtils.getBigDecimal(params.get("electricityCharge")));
+		contract.setElectricitySubmitType(Integer.parseInt((String) params.get("electricitySubmitType")));
+		contract.setElectricityPaid(MathUtils.getBigDecimal(params.get("electricityPaid")));
+		contract.setPaidTime((String) params.get("paidTime"));
+	}
 }

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import com.common.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,34 +38,34 @@ public class RoleServiceImpl implements RoleService {
 	private RoleMenuRepository roleMenuRepository;
 	
 	@Override
-	public R addRole(String name) {
+	public ResultUtils addRole(String name) {
 		RoleEntity role = new RoleEntity();
 		role.setName(name);
 		role.setCreateTime(new Date());
 		em.persist(role);
-		return R.ok("新增角色成功");
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R editRole(Long id, String name) {
+	public ResultUtils editRole(Long id, String name) {
 		RoleEntity role = em.find(RoleEntity.class, id);
 		if (null != role) {
 			role.setName(name);
 			role.setUpdateTime(new Date());
 			em.merge(role);
 		}
-		return R.ok("修改角色成功");
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R deleteRole(Long id) {
+	public ResultUtils deleteRole(Long id) {
 		// 先删除角色和菜单的中间表
 		roleMenuRepository.deleteByRole(id);
 		RoleEntity role = em.find(RoleEntity.class, id);
 		if (null != role) {
 			em.remove(role);
 		}
-		return R.ok("删除成功");
+		return ResultUtils.ok();
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public R saveMenus(Long roleId, Long[] menuIds) {
+	public ResultUtils saveMenus(Long roleId, Long[] menuIds) {
 		roleMenuRepository.deleteByRole(roleId);
 		for (Long menuId : menuIds) {
 			RoleMenuEntity rm = new RoleMenuEntity();
@@ -104,7 +105,6 @@ public class RoleServiceImpl implements RoleService {
 			rm.setCreateTime(new Date());
 			em.persist(rm);
 		}
-		return R.ok("保存成功");
+		return ResultUtils.ok();
 	}
-
 }

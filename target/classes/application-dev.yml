@@ -5,14 +5,14 @@ spring:
         druid:
             first:  #数据源1
                 # url: jdbc:mysql://localhost:3306/renren_fastplus?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-                url: jdbc:mysql://47.106.82.187:3306/antique?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+                url: jdbc:mysql://120.25.238.66:3306/order?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
                 username: root
-                password: a123
+                password: asdQWE321
             second:  #数据源2
                 # url: jdbc:mysql://localhost:3306/renren_fastplus?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-                url: jdbc:mysql://47.106.82.187:3306/antique?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+                url: jdbc:mysql://120.25.238.66:3306/order?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
                 username: root
-                password: a123
+                password: asdQWE321
             initial-size: 10
             max-active: 100
             min-idle: 10

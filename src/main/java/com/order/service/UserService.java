@@ -1,8 +1,6 @@
 package com.order.service;
 
-import com.common.utils.PageUtils;
-import com.common.utils.Query;
-import com.common.utils.R;
+import com.common.utils.*;
 import com.order.entity.UserEntity;
 
 /**
@@ -15,11 +13,11 @@ public interface UserService {
 
 	UserEntity queryUserByName(String username);
 	
-	R addUser(String name, String password, Long roleId);
+	ResultUtils addUser(String name, String password, Long roleId);
+
+	ResultUtils editUser(Long userId, String name, String password, Long roleId);
+
+	ResultUtils deleteUser(Long id);
 	
-	R editUser(Long userId, String name, String password, Long roleId);
-	
-	R deleteUser(Long id);
-	
-	PageUtils queryList(Query query);
+	PageUtils2<UserEntity> queryList(Query query);
 }

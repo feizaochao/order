@@ -1,5 +1,7 @@
 package com.order.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -14,6 +16,5 @@ import java.util.List;
 * @version v1.0
 */
 public interface OrderRepository extends JpaRepository<OrderEntity, Long>, JpaSpecificationExecutor<OrderEntity> {
-
     List<OrderEntity> findByCustomerId(Long customerId);
 }

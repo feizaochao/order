@@ -5,6 +5,8 @@ import java.util.Map;
 import com.common.utils.PageUtils;
 import com.common.utils.Query;
 import com.common.utils.R;
+import com.common.utils.ResultUtils;
+import com.order.entity.AreaEntity;
 
 /**
 * @Description: TODO
@@ -14,13 +16,13 @@ import com.common.utils.R;
 */
 public interface AreaService {
 
-	R addArea(Map<String, Object> params);
-	
-	R editArea(Map<String, Object> params);
-	
-	R deleteArea(Long id);
+	ResultUtils addArea(AreaEntity area);
+
+	ResultUtils editArea(AreaEntity area);
+
+	ResultUtils deleteArea(Long id);
 	
 	PageUtils queryList(Query query);
-	
-	R queryAll();
+
+	ResultUtils queryAll();
 }

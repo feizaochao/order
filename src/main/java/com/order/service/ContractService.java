@@ -21,4 +21,6 @@ public interface ContractService {
 	R deleteContract(Long id);
 	
 	PageUtils queryList(Query query);
+
+	R queryOne(Long id);
 }

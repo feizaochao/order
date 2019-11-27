@@ -11,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import com.common.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +22,6 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.common.utils.PageUtils;
-import com.common.utils.Query;
-import com.common.utils.R;
 import com.order.entity.UserEntity;
 import com.order.entity.UserRoleEntity;
 import com.order.repository.UserRepository;
@@ -54,10 +52,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public R addUser(String name, String password, Long roleId) {
+	public ResultUtils addUser(String name, String password, Long roleId) {
 		UserEntity user = userRepository.findOneByName(name);
 		if (null != user) {
-			return R.error("用户名已存在");
+			return ResultUtils.error(201, "用户已存在");
 		}
 		user = new UserEntity();
 		user.setName(name);
@@ -73,14 +71,14 @@ public class UserServiceImpl implements UserService {
 		ur.setCreateTime(new Date());
 		em.persist(ur);
 		
-		return R.ok("新增成功");
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R editUser(Long userId, String name, String password, Long roleId) {
+	public ResultUtils editUser(Long userId, String name, String password, Long roleId) {
 		UserEntity user = em.find(UserEntity.class, userId);
 		if (null == user) {
-			return R.error("用户不存在");
+			return ResultUtils.error(201, "用户不存在");
 		}
 		user.setName(name);
 		user.setPassword(password);
@@ -94,22 +92,22 @@ public class UserServiceImpl implements UserService {
 		ur.setCreateTime(new Date());
 		em.persist(ur);
 		
-		return R.ok("修改成功");
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R deleteUser(Long id) {
+	public ResultUtils deleteUser(Long id) {
 		userRoleRepository.deleteRoleByUser(id);
 		UserEntity user = em.find(UserEntity.class, id);
 		if (null == user) {
-			return R.error("用户不存在");
+			return ResultUtils.error(201, "用户不存在");
 		}
 		em.remove(user);
-		return R.ok("删除成功");
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public PageUtils queryList(final Query query) {
+	public PageUtils2<UserEntity> queryList(final Query query) {
 		Specification<UserEntity> specification = new Specification<UserEntity>() {
 			@Override
 			public Predicate toPredicate(Root<UserEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -131,7 +129,8 @@ public class UserServiceImpl implements UserService {
 			String roleName = (String) qy.getSingleResult();
 			user.setRoleName(roleName);
 		}
-		PageUtils pageUtils = new PageUtils(page.getContent(), Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
+//		PageUtils pageUtils = new PageUtils(page.getContent(), Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
+		PageUtils2<UserEntity> pageUtils = new PageUtils2<UserEntity>(Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage(), page.getContent());
 		return pageUtils;
 	}
 
