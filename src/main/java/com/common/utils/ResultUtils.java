@@ -17,9 +17,7 @@ public class ResultUtils<T> implements Serializable {
     private int code;
     @ApiModelProperty(value = "返回信息", dataType = "string")
     private String msg;
-    @ApiModelProperty(value = "分页信息", dataType = "object")
-    private PageUtils2<T> pageUtils2;
-    @ApiModelProperty(value = "单个数据", dataType = "object")
+    @ApiModelProperty(value = "数据", dataType = "object")
     private Object data;
 
     public ResultUtils(int code, String msg) {
@@ -47,14 +45,6 @@ public class ResultUtils<T> implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public PageUtils2<T> getPageUtils2() {
-        return pageUtils2;
-    }
-
-    public void setPageUtils2(PageUtils2<T> pageUtils2) {
-        this.pageUtils2 = pageUtils2;
     }
 
     public Object getData() {

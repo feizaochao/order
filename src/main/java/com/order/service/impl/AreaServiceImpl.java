@@ -52,7 +52,7 @@ public class AreaServiceImpl implements AreaService {
 		areaEntity.setAreaName(area.getAreaName());
 		areaEntity.setCreateTime(new Date());
 		em.persist(areaEntity);
-		return ResultUtils.error(201, "");
+		return ResultUtils.ok();
 	}
 
 	@Override

@@ -1,5 +1,9 @@
 package com.order.entity;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,24 +14,29 @@ import java.util.Date;
  * @Description: 订单-收费信息
  * @date 2019/11/22
  */
+@ApiModel("订单-收费信息")
 @Entity
 @Table(name = "e_order_charge")
 public class OrderChargeEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "id", dataType = "long")
     private Long id;
 
     /*每周期收费金额*/
     @Column
+    @ApiModelProperty(value = "每周期收费金额", dataType = "double")
     private BigDecimal chargeAmount;
 
     /*收费日期*/
     @Column
+    @ApiModelProperty(value = "收费日期", dataType = "string")
     private String chargeDate;
 
     /*下期续费日期*/
     @Column
+    @ApiModelProperty(value = "下期续费日期", dataType = "string")
     private String nextChargeDate;
 
     public Long getId() {

@@ -1,5 +1,8 @@
 package com.order.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +16,7 @@ import javax.persistence.Table;
 * @date 2019年11月6日
 * @version V1.0
 */
+@ApiModel("菜单实例")
 @Entity
 @Table(name = "e_menu")
 public class MenuEntity extends BaseEntity {
@@ -21,12 +25,15 @@ public class MenuEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "id", dataType = "long")
 	private Long id;
 	
 	@Column
+	@ApiModelProperty(value = "name", dataType = "string")
 	private String name;
 	
 	@Column
+	@ApiModelProperty(value = "path", dataType = "string")
 	private String path;
 	
 	public Long getId() {

@@ -6,6 +6,9 @@ package com.order.entity;
 * @version v1.0
 */
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,51 +19,63 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "e_customer")
+@ApiModel("客户信息")
 public class CustomerEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 8628307307476563043L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "id", dataType = "long")
 	private Long id;
 	
 	/*客户名称*/
 	@Column
+	@ApiModelProperty(value = "客户名称", dataType = "string")
 	private String name;
 	
 	/*片区号*/
 	@Column
+	@ApiModelProperty(value = "片区号", dataType = "long")
 	private Long areaId;
 	
 	/*联系人*/
 	@Column
+	@ApiModelProperty(value = "联系人", dataType = "string")
 	private String contact;
 	
 	/*商城编号*/
 	@Column
+	@ApiModelProperty(value = "商城编号", dataType = "string")
 	private String mallNo;
 	
 	/*证件号*/
 	@Column
+	@ApiModelProperty(value = "证件号", dataType = "string")
 	private String licenseNo;
 	
 	/*存留信息*/
 	@Column
+	@ApiModelProperty(value = "客户存留信息", dataType = "int")
 	private int persist;
 	
 	/*证件地址*/
 	@Column
+	@ApiModelProperty(value = "证件地址", dataType = "string")
 	private String licenseAddress;
 	
 	/*地址*/
 	@Column
+	@ApiModelProperty(value = "地址", dataType = "string")
 	private String address;
 	
 	/*备注*/
 	@Column
+	@ApiModelProperty(value = "备注", dataType = "string")
 	private String remarks;
 
 	@Transient
+	@ApiModelProperty(value = "片区名", dataType = "string")
 	private String areaName;
 	
 	public Long getId() {

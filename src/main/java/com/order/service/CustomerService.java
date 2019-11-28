@@ -5,6 +5,8 @@ import java.util.Map;
 import com.common.utils.PageUtils;
 import com.common.utils.Query;
 import com.common.utils.R;
+import com.common.utils.ResultUtils;
+import com.order.entity.CustomerEntity;
 
 /**
 * @Description: TODO
@@ -14,11 +16,11 @@ import com.common.utils.R;
 */
 public interface CustomerService {
 
-	R addCustomer(Map<String, Object> params);
-	
-	R editCustomer(Map<String, Object> params);
-	
-	R deleteCustomer(Long id);
+	ResultUtils addCustomer(CustomerEntity params);
+
+	ResultUtils editCustomer(CustomerEntity params);
+
+	ResultUtils deleteCustomer(Long id);
 	
 	PageUtils queryList(Query query);
 

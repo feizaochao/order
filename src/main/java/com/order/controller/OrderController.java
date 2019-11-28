@@ -2,13 +2,14 @@ package com.order.controller;
 
 import java.util.Map;
 
+import com.common.utils.*;
+import com.order.entity.OrderEntity;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.common.utils.PageUtils;
-import com.common.utils.Query;
-import com.common.utils.R;
 import com.order.service.OrderService;
 
 /**
@@ -17,6 +18,7 @@ import com.order.service.OrderService;
 * @date 2019年11月21日
 * @version v1.0
 */
+@Api(tags = "订单接口")
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -24,30 +26,35 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	@GetMapping(value = "/add")
-	public R addOrder(@RequestParam Map<String, Object> params) {
+	@PostMapping(value = "/add")
+	@ApiOperation("订单新增")
+	public ResultUtils addOrder(@RequestBody OrderEntity params) {
 		return orderService.addOrder(params);
 	}
 	
-	@GetMapping(value = "/edit")
-	public R editOrder(@RequestParam Map<String, Object> params) {
+	@PostMapping(value = "/edit")
+	@ApiOperation("订单编辑")
+	public ResultUtils editOrder(@RequestBody OrderEntity params) {
 		return orderService.editOrder(params);
 	}
 	
 	@PostMapping(value = "/delete")
-	public R deleteOrder(Long id) {
+	@ApiOperation("订单删除")
+	public ResultUtils deleteOrder(Long id) {
 		return orderService.deleteOrder(id);
 	}
 	
-	@GetMapping(value = "/list")
-	public R queryList(@RequestParam Map<String, Object> params) {
-		Query query = new Query(params);
+	@PostMapping(value = "/list")
+	@ApiOperation("获取订单列表")
+	public ResultUtils queryList(@RequestBody PageParams params) {
+		Query query = new Query(params.toMap());
 		PageUtils page = orderService.queryList(query);
-		return R.ok().put("data", page);
+		return ResultUtils.success("", page);
 	}
 
 	@PostMapping("/one")
-	public R queryOne(Long id) {
+	@ApiOperation("获取单个订单")
+	public ResultUtils queryOne(Long id) {
 		return orderService.queryOne(id);
 	}
 }

@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import com.common.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,10 +23,6 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.common.utils.MathUtils;
-import com.common.utils.PageUtils;
-import com.common.utils.Query;
-import com.common.utils.R;
 import com.order.entity.ContractEntity;
 import com.order.repository.ContractRepository;
 import com.order.service.ContractService;
@@ -46,34 +43,34 @@ public class ContractServiceImpl implements ContractService {
 	private ContractRepository contractRepository;
 	
 	@Override
-	public R addContract(Map<String, Object> params) {
+	public ResultUtils addContract(ContractEntity params) {
 		ContractEntity contract = new ContractEntity();
 		buildContract(contract, params);
 		contract.setCreateTime(new Date());
 		em.persist(contract);
-		return R.ok();
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R editContract(Map<String, Object> params) {
-		ContractEntity contract = em.find(ContractEntity.class, Long.valueOf((String) params.get("id")));
+	public ResultUtils editContract(ContractEntity params) {
+		ContractEntity contract = em.find(ContractEntity.class, params.getId());
 		if(null == contract) {
-			return R.error("修改失败");
+			return ResultUtils.error(201, "");
 		}
 		buildContract(contract, params);
 		contract.setUpdateTime(new Date());
 		em.merge(contract);
-		return R.ok();
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R deleteContract(Long id) {
+	public ResultUtils deleteContract(Long id) {
 		ContractEntity contract = em.find(ContractEntity.class, id);
 		if(null == contract) {
-			return R.error("删除失败");
+			return ResultUtils.error(201, "");
 		}
 		em.remove(contract);
-		return R.ok();
+		return ResultUtils.ok();
 	}
 
 	@Override
@@ -94,28 +91,28 @@ public class ContractServiceImpl implements ContractService {
 	}
 
 	@Override
-	public R queryOne(Long id) {
+	public ResultUtils queryOne(Long id) {
 		ContractEntity contract = em.find(ContractEntity.class, id);
 		if(null == contract) {
-			return R.error();
+			return ResultUtils.error(201, "");
 		}
-		return R.ok().put("data", contract);
+		return ResultUtils.ok();
 	}
 
-	private void buildContract(ContractEntity contract, Map<String, Object> params) {
-		contract.setSiteName((String) params.get("siteName"));
-		contract.setContractName((String) params.get("contractName"));
-		contract.setContractNo((String) params.get("contractNo"));
-		contract.setPartyA((String) params.get("partyA"));
-		contract.setPartyB((String) params.get("partyB"));
-		contract.setContractStartTime((String) params.get("contractStartTime"));
-		contract.setContractEndTime((String) params.get("contractEndTime"));
-		contract.setElectricityFee(MathUtils.getBigDecimal(params.get("electricityFee")));
-		contract.setStartTime((String) params.get("startTime"));
-		contract.setEndTime((String) params.get("endTime"));
-		contract.setElectricityCharge(MathUtils.getBigDecimal(params.get("electricityCharge")));
-		contract.setElectricitySubmitType(Integer.parseInt((String) params.get("electricitySubmitType")));
-		contract.setElectricityPaid(MathUtils.getBigDecimal(params.get("electricityPaid")));
-		contract.setPaidTime((String) params.get("paidTime"));
+	private void buildContract(ContractEntity contract, ContractEntity params) {
+		contract.setSiteName(params.getSiteName());
+		contract.setContractName(params.getContractName());
+		contract.setContractNo(params.getContractNo());
+		contract.setPartyA(params.getPartyA());
+		contract.setPartyB(params.getPartyB());
+		contract.setContractStartTime(params.getContractStartTime());
+		contract.setContractEndTime(params.getContractEndTime());
+		contract.setElectricityFee(params.getElectricityFee());
+		contract.setStartTime(params.getStartTime());
+		contract.setEndTime(params.getEndTime());
+		contract.setElectricityCharge(params.getElectricityCharge());
+		contract.setElectricitySubmitType(params.getElectricitySubmitType());
+		contract.setElectricityPaid(params.getElectricityPaid());
+		contract.setPaidTime(params.getPaidTime());
 	}
 }

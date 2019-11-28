@@ -2,12 +2,14 @@ package com.order.controller;
 
 import java.util.Map;
 
+import com.common.utils.*;
+import com.order.entity.ContractEntity;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import com.common.utils.PageUtils;
-import com.common.utils.Query;
-import com.common.utils.R;
 import com.order.service.ContractService;
 
 /**
@@ -16,37 +18,43 @@ import com.order.service.ContractService;
 * @date 2019年11月19日
 * @version v1.0
 */
+@Api(tags = "合同接口")
 @RestController
 @RequestMapping("/contract")
 public class ContractController {
 	
 	@Autowired
 	private ContractService contractService;
-	
-	@GetMapping(value = "/add")
-	public R addContract(@RequestParam Map<String, Object> params) {
+
+	@ApiOperation("合同新增")
+	@PostMapping(value = "/add")
+	public ResultUtils addContract(@RequestBody ContractEntity params) {
 		return contractService.addContract(params);
 	}
-	
-	@GetMapping(value = "/edit")
-	public R editContract(@RequestParam Map<String, Object> params) {
+
+	@ApiOperation("合同编辑")
+	@PostMapping(value = "/edit")
+	public ResultUtils editContract(@RequestBody ContractEntity params) {
 		return contractService.editContract(params);
 	}
-	
+
+	@ApiOperation("合同删除")
 	@PostMapping(value = "/delete")
-	public R deleteContract(Long id) {
+	public ResultUtils deleteContract(Long id) {
 		return contractService.deleteContract(id);
 	}
-	
-	@GetMapping(value = "/list")
-	public R queryList(@RequestParam Map<String, Object> params) {
-		Query query = new Query(params);
+
+	@ApiOperation("获取合同列表")
+	@PostMapping(value = "/list")
+	public ResultUtils queryList(@RequestBody PageParams params) {
+		Query query = new Query(params.toMap());
 		PageUtils page = contractService.queryList(query);
-		return R.ok().put("data", page);
+		return ResultUtils.success("", page);
 	}
 
+	@ApiOperation("获取单个合同")
 	@PostMapping(value = "/one")
-	public R queryOne(Long id) {
+	public ResultUtils queryOne(Long id) {
 		return contractService.queryOne(id);
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 import com.common.utils.PageUtils;
 import com.common.utils.Query;
 import com.common.utils.R;
+import com.common.utils.ResultUtils;
+import com.order.entity.OrderEntity;
 
 /**
 * @Description: TODO
@@ -14,13 +16,13 @@ import com.common.utils.R;
 */
 public interface OrderService {
 
-	R addOrder(Map<String, Object> params);
+	ResultUtils addOrder(OrderEntity params);
 
-	R editOrder(Map<String, Object> params);
-	
-	R deleteOrder(Long id);
+	ResultUtils editOrder(OrderEntity params);
+
+	ResultUtils deleteOrder(Long id);
 	
 	PageUtils queryList(Query query);
 
-	R queryOne(Long id);
+	ResultUtils queryOne(Long id);
 }

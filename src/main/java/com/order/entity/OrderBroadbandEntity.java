@@ -1,5 +1,8 @@
 package com.order.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -9,36 +12,44 @@ import java.math.BigDecimal;
  * @Description: 订单-宽带信息
  * @date 2019/11/22
  */
+@ApiModel("订单-宽带信息")
 @Entity
 @Table(name = "e_order_broadband")
 public class OrderBroadbandEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "id", dataType = "long")
     private Long id;
 
     /*运营商*/
     @Column
+    @ApiModelProperty(value = "运营商", dataType = "string")
     private String operator;
 
     /*宽带类型*/
     @Column
+    @ApiModelProperty(value = "宽带类型", dataType = "string")
     private String type;
 
     /*宽带资费*/
     @Column
+    @ApiModelProperty(value = "宽带资费", dataType = "double")
     private BigDecimal price;
 
     /*固话*/
     @Column
+    @ApiModelProperty(value = "固话", dataType = "string")
     private String phone;
 
     /*固话数量*/
     @Column(nullable = true)
+    @ApiModelProperty(value = "固话数量", dataType = "int")
     private int phoneNum;
 
     /*语音资费*/
     @Column
+    @ApiModelProperty(value = "语音资费", dataType = "double")
     private BigDecimal voiceTariff;
 
     public Long getId() {

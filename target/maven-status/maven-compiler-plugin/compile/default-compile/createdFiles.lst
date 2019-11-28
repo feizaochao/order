@@ -6,7 +6,6 @@ com\modules\oss\cloud\QcloudCloudStorageService.class
 com\modules\sys\service\SysUserRoleService.class
 com\modules\sys\dao\BaseDao.class
 com\modules\sys\controller\SysRoleController.class
-com\order\entity\ArticleEntity.class
 com\modules\sys\service\SysRoleMenuService.class
 com\modules\api\entity\TokenEntity.class
 com\order\service\impl\CustomerServiceImpl$1.class
@@ -19,7 +18,6 @@ com\modules\sys\controller\SysLoginController.class
 com\order\controller\MenuController.class
 com\modules\sys\service\ShiroService.class
 com\modules\api\entity\UserEntity.class
-com\order\service\ArticleService.class
 com\order\service\impl\ContractServiceImpl$1.class
 com\common\utils\R.class
 com\order\filter\SimpleCORSFilter.class
@@ -115,6 +113,7 @@ com\common\utils\MathUtils.class
 com\order\controller\ContractController.class
 com\modules\api\service\impl\TokenServiceImpl.class
 com\order\entity\UserRoleEntity.class
+com\order\config\SwaggerConfig.class
 com\modules\sys\service\impl\SysMenuServiceImpl.class
 com\order\service\impl\AreaServiceImpl.class
 com\modules\sys\dao\SysRoleMenuDao.class
@@ -152,17 +151,19 @@ com\datasources\annotation\DataSource.class
 com\modules\sys\entity\SysUserTokenEntity.class
 com\common\utils\ConfigConstant.class
 com\order\service\impl\LoginServiceImpl.class
+com\common\utils\PageParams.class
 com\modules\sys\controller\SysLogController.class
 com\order\entity\UserEntity.class
 com\common\utils\DateUtils.class
 com\modules\sys\entity\SysLogEntity.class
 com\common\utils\Constant$ScheduleStatus.class
 com\modules\api\dao\TokenDao.class
+com\common\utils\ResultUtils.class
 com\order\service\impl\CustomerServiceImpl.class
 com\order\repository\UserRoleRepository.class
 com\modules\sys\service\impl\ShiroServiceImpl.class
 com\modules\sys\service\SysDeptService.class
-com\order\controller\ArticleController.class
+com\common\utils\PageUtils2.class
 com\order\service\OrderService.class
 com\modules\api\resolver\LoginUserHandlerMethodArgumentResolver.class
 com\common\utils\RedisKeys.class
@@ -176,7 +177,6 @@ com\modules\sys\dao\SysUserRoleDao.class
 com\modules\sys\entity\SysConfigEntity.class
 com\order\entity\ContractEntity.class
 com\modules\sys\dao\SysConfigDao.class
-com\order\service\impl\ArticleServiceImpl.class
 com\order\controller\LoginController.class
 com\common\utils\HttpContextUtils.class
 com\modules\oss\cloud\QiniuCloudStorageService.class

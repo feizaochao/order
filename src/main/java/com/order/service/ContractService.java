@@ -5,6 +5,8 @@ import java.util.Map;
 import com.common.utils.PageUtils;
 import com.common.utils.Query;
 import com.common.utils.R;
+import com.common.utils.ResultUtils;
+import com.order.entity.ContractEntity;
 
 /**
 * @Description: TODO
@@ -14,13 +16,13 @@ import com.common.utils.R;
 */
 public interface ContractService {
 	
-	R addContract(Map<String, Object> params);
-	
-	R editContract(Map<String, Object> params);
-	
-	R deleteContract(Long id);
+	ResultUtils addContract(ContractEntity params);
+
+	ResultUtils editContract(ContractEntity params);
+
+	ResultUtils deleteContract(Long id);
 	
 	PageUtils queryList(Query query);
 
-	R queryOne(Long id);
+	ResultUtils queryOne(Long id);
 }

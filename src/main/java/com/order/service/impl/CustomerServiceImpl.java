@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import com.common.utils.ResultUtils;
 import com.order.entity.*;
 import com.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,31 +49,31 @@ public class CustomerServiceImpl implements CustomerService {
 	private OrderRepository orderRepository;
 	
 	@Override
-	public R addCustomer(Map<String, Object> params) {
-		CustomerEntity customer = new CustomerEntity();
+	public ResultUtils addCustomer(CustomerEntity params) {
+		CustomerEntity customer= new CustomerEntity();
 		buildCustomer(customer, params);
 		customer.setCreateTime(new Date());
 		em.persist(customer);
-		return R.ok();
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R editCustomer(Map<String, Object> params) {
-		CustomerEntity customer = em.find(CustomerEntity.class, Long.valueOf((String) params.get("id")));
+	public ResultUtils editCustomer(CustomerEntity params) {
+		CustomerEntity customer = em.find(CustomerEntity.class, params.getId());
 		if(null == customer) {
-			return R.error();
+			return ResultUtils.error(201, "");
 		}
 		buildCustomer(customer, params);
 		customer.setUpdateTime(new Date());
 		em.merge(customer);
-		return R.ok();
+		return ResultUtils.ok();
 	}
 
 	@Override
-	public R deleteCustomer(Long id) {
+	public ResultUtils deleteCustomer(Long id) {
 		CustomerEntity customer = em.find(CustomerEntity.class, id);
 		if(null == customer) {
-			return R.error();
+			return ResultUtils.error(201, "");
 		}
 		// 删除订单信息
 		List<OrderEntity> orders = orderRepository.findByCustomerId(customer.getId());
@@ -111,7 +112,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		// 删除客户信息
 		em.remove(customer);
-		return R.ok();
+		return ResultUtils.ok();
 	}
 
 	@Override
@@ -143,7 +144,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public R queryOne(final Query query) {
-		Long customerId = Long.valueOf((String) query.get("id"));
+		Long customerId = (Long) query.get("id");
 		CustomerEntity customer = em.find(CustomerEntity.class, customerId);
 		if (null == customer) {
 			return R.error();
@@ -181,16 +182,16 @@ public class CustomerServiceImpl implements CustomerService {
 		return r;
 	}
 
-	private void buildCustomer(CustomerEntity customer, Map<String, Object> params) {
-		customer.setName((String) params.get("name"));
-		customer.setAreaId(Long.valueOf((String) params.get("areaId")));
-		customer.setContact((String) params.get("contact"));
-		customer.setMallNo((String) params.get("mallNo"));
-		customer.setLicenseNo((String) params.get("licenseNo"));
-		customer.setPersist(Integer.parseInt((String) params.get("persist")));
-		customer.setLicenseAddress((String) params.get("licenseAddress"));
-		customer.setAddress((String) params.get("address"));
-		customer.setRemarks((String) params.get("remark"));
+	private void buildCustomer(CustomerEntity customer, CustomerEntity params) {
+		customer.setName(params.getName());
+		customer.setAreaId(params.getAreaId());
+		customer.setContact(params.getContact());
+		customer.setMallNo(params.getMallNo());
+		customer.setLicenseNo(params.getLicenseNo());
+		customer.setPersist(params.getPersist());
+		customer.setLicenseAddress(params.getLicenseAddress());
+		customer.setAddress(params.getAddress());
+		customer.setRemarks(params.getRemarks());
 	}
 
 }

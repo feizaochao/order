@@ -1,5 +1,9 @@
 package com.order.entity;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 /**
@@ -8,28 +12,34 @@ import javax.persistence.*;
  * @Description: 开票信息
  * @date 2019/11/22
  */
+@ApiModel("订单-开票信息")
 @Entity
 @Table(name = "e_order_invoice")
 public class OrderInvoiceEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "id", dataType = "long")
     private Long id;
 
     /*是否开票*/
     @Column(nullable = true)
+    @ApiModelProperty(value = "是否开票", dataType = "int")
     private int isInvoice;
 
     /*开票类型*/
     @Column(nullable = true)
+    @ApiModelProperty(value = "开票类型", dataType = "int")
     private int type;
 
     /*开票日期*/
     @Column
+    @ApiModelProperty(value = "开票日期", dataType = "string")
     private String invoiceDate;
 
     /*开票号码*/
     @Column
+    @ApiModelProperty(value = "开票号码", dataType = "string")
     private String invoiceNum;
 
     public Long getId() {

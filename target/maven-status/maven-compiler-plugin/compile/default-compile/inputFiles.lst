@@ -82,7 +82,6 @@ D:\Code\git\order\src\main\java\com\modules\sys\service\impl\SysUserTokenService
 D:\Code\git\order\src\main\java\com\order\entity\ContractEntity.java
 D:\Code\git\order\src\main\java\com\order\entity\RoleMenuEntity.java
 D:\Code\git\order\src\main\java\com\order\controller\AreaController.java
-D:\Code\git\order\src\main\java\com\order\entity\ArticleEntity.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysRoleService.java
 D:\Code\git\order\src\main\java\com\order\repository\UserRepository.java
 D:\Code\git\order\src\main\java\com\order\service\impl\LoginServiceImpl.java
@@ -96,8 +95,8 @@ D:\Code\git\order\src\main\java\com\order\service\LoginService.java
 D:\Code\git\order\src\main\java\com\order\controller\UserController.java
 D:\Code\git\order\src\main\java\com\order\controller\RoleController.java
 D:\Code\git\order\src\main\java\com\modules\sys\dao\SysUserTokenDao.java
-D:\Code\git\order\src\main\java\com\order\controller\ArticleController.java
 D:\Code\git\order\src\main\java\com\order\entity\OrderOperatorEntity.java
+D:\Code\git\order\src\main\java\com\common\utils\PageUtils2.java
 D:\Code\git\order\src\main\java\com\modules\sys\dao\SysRoleMenuDao.java
 D:\Code\git\order\src\main\java\com\datasources\DynamicDataSourceConfig.java
 D:\Code\git\order\src\main\java\com\modules\oss\cloud\OSSFactory.java
@@ -112,8 +111,8 @@ D:\Code\git\order\src\main\java\com\order\entity\OrderEntity.java
 D:\Code\git\order\src\main\java\com\modules\sys\controller\SysDeptController.java
 D:\Code\git\order\src\main\java\com\modules\sys\controller\SysRoleController.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysUserRoleService.java
+D:\Code\git\order\src\main\java\com\common\utils\PageParams.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysLogService.java
-D:\Code\git\order\src\main\java\com\order\service\ArticleService.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\impl\SysConfigServiceImpl.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\impl\SysRoleMenuServiceImpl.java
 D:\Code\git\order\src\main\java\com\common\xss\XssFilter.java
@@ -124,6 +123,7 @@ D:\Code\git\order\src\main\java\com\modules\sys\service\SysConfigService.java
 D:\Code\git\order\src\main\java\com\common\utils\HttpContextUtils.java
 D:\Code\git\order\src\main\java\com\modules\sys\dao\SysConfigDao.java
 D:\Code\git\order\src\main\java\com\modules\sys\oauth2\OAuth2Token.java
+D:\Code\git\order\src\main\java\com\order\config\SwaggerConfig.java
 D:\Code\git\order\src\main\java\com\modules\oss\cloud\CloudStorageConfig.java
 D:\Code\git\order\src\main\java\com\common\utils\RedisUtils.java
 D:\Code\git\order\src\main\java\com\order\entity\MenuEntity.java
@@ -132,12 +132,12 @@ D:\Code\git\order\src\main\java\com\order\service\impl\RoleServiceImpl.java
 D:\Code\git\order\src\main\java\com\order\repository\OrderRepository.java
 D:\Code\git\order\src\main\java\com\modules\api\service\UserService.java
 D:\Code\git\order\src\main\java\com\modules\sys\dao\SysRoleDeptDao.java
-D:\Code\git\order\src\main\java\com\order\service\impl\ArticleServiceImpl.java
 D:\Code\git\order\src\main\java\com\config\RedisConfig.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysRoleMenuService.java
 D:\Code\git\order\src\main\java\com\modules\oss\service\SysOssService.java
 D:\Code\git\order\src\main\java\com\order\repository\UserRoleRepository.java
 D:\Code\git\order\src\main\java\com\modules\oss\controller\SysOssController.java
+D:\Code\git\order\src\main\java\com\common\utils\ResultUtils.java
 D:\Code\git\order\src\main\java\com\common\aspect\SysLogAspect.java
 D:\Code\git\order\src\main\java\com\modules\api\controller\ApiTestController.java
 D:\Code\git\order\src\main\java\com\common\utils\PageUtils.java

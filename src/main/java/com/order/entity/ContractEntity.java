@@ -1,5 +1,9 @@
 package com.order.entity;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,6 +20,7 @@ import javax.persistence.Table;
 * @date 2019年11月19日
 * @version v1.0
 */
+@ApiModel("合同实体")
 @Entity
 @Table(name = "e_contract")
 public class ContractEntity extends BaseEntity {
@@ -24,67 +29,83 @@ public class ContractEntity extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "id", dataType = "long")
 	private Long id;
 	/*----基本信息----*/
 	/*站点名称*/
 	@Column
+	@ApiModelProperty(value = "站点名称", dataType = "string")
 	private String siteName;
 	
 	/*合同名称*/
 	@Column
+	@ApiModelProperty(value = "合同名称", dataType = "string")
 	private String contractName;
 	
 	/*合同编号*/
 	@Column
+	@ApiModelProperty(value = "合同编号", dataType = "string")
 	private String contractNo;
 	
 	/*合同甲方*/
 	@Column
+	@ApiModelProperty(value = "合同甲方", dataType = "string")
 	private String partyA;
 	
 	/*合同乙方*/
 	@Column
+	@ApiModelProperty(value = "合同乙方", dataType = "string")
 	private String partyB;
 	
 	/*合同开始时间*/
 	@Column
+	@ApiModelProperty(value = "合同开始时间", dataType = "string")
 	private String contractStartTime;
 	
 	/*合同结束时间*/
 	@Column
+	@ApiModelProperty(value = "合同结束时间", dataType = "string")
 	private String contractEndTime;
 	
 	/*合同金额*/
 	@Column
+	@ApiModelProperty(value = "合同金额", dataType = "double")
 	private BigDecimal contractAmount;
 	
 	/*电费*/
 	@Column
+	@ApiModelProperty(value = "电费", dataType = "double")
 	private BigDecimal electricityFee;
 	
 	/*---- 电费情况 ----*/
 	/*开始时间*/
 	@Column
+	@ApiModelProperty(value = "开始时间", dataType = "string")
 	private String startTime;
 	
 	/*结束时间*/
 	@Column
+	@ApiModelProperty(value = "结束时间", dataType = "string")
 	private String endTime;
 	
 	/*应收电费*/
 	@Column
+	@ApiModelProperty(value = "应收电费", dataType = "double")
 	private BigDecimal electricityCharge;
 	
 	/*电费资料提交情况*/
 	@Column
+	@ApiModelProperty(value = "电费资料提交情况", dataType = "int")
 	private int electricitySubmitType;
 	
 	/*已交费用给物业*/
 	@Column
+	@ApiModelProperty(value = "已交费用给物业", dataType = "double")
 	private BigDecimal electricityPaid;
 
 	/*缴费日期*/
 	@Column
+	@ApiModelProperty(value = "缴费日期", dataType = "string")
 	private String paidTime;
 	
 	public Long getId() {
