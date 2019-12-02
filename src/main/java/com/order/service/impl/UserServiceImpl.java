@@ -110,9 +110,14 @@ public class UserServiceImpl implements UserService {
 	public PageUtils2<UserEntity> queryList(final Query query) {
 		Specification<UserEntity> specification = new Specification<UserEntity>() {
 			@Override
-			public Predicate toPredicate(Root<UserEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+			public Predicate toPredicate(Root<UserEntity> root, CriteriaQuery<?> qy, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<>();
-				return null;
+				String fieldName = (String) query.get("fieldName");
+				if(null != fieldName && !"".equals(fieldName)) {
+					Predicate predicate = cb.like(root.<String>get(fieldName), "%" + query.get("keyword") + "%");
+					predicates.add(predicate);
+				}
+				return cb.and(predicates.toArray(new Predicate[0]));
 			}
 		};
 		List<Order> orders = new ArrayList<>();
@@ -129,7 +134,6 @@ public class UserServiceImpl implements UserService {
 			String roleName = (String) qy.getSingleResult();
 			user.setRoleName(roleName);
 		}
-//		PageUtils pageUtils = new PageUtils(page.getContent(), Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		PageUtils2<UserEntity> pageUtils = new PageUtils2<UserEntity>(Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage(), page.getContent());
 		return pageUtils;
 	}

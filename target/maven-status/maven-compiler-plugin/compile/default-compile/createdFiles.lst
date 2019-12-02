@@ -55,6 +55,7 @@ com\datasources\DataSourceNames.class
 com\order\controller\AreaController.class
 com\common\validator\Assert.class
 com\common\validator\ValidatorUtils.class
+com\common\utils\HttpClient.class
 com\modules\sys\service\impl\SysConfigServiceImpl.class
 com\common\utils\RedisUtils.class
 com\common\utils\SpringContextUtils.class
@@ -67,6 +68,7 @@ com\common\aspect\DataFilterAspect.class
 com\modules\sys\service\impl\SysUserRoleServiceImpl.class
 com\order\service\impl\UserServiceImpl$1.class
 com\order\service\CustomerService.class
+com\common\utils\WXRequestParams.class
 com\modules\sys\service\impl\SysLogServiceImpl.class
 com\order\service\RoleService.class
 com\common\annotation\SysLog.class

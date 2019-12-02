@@ -8,14 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 
 import com.common.utils.*;
 import com.order.entity.*;
+import com.order.repository.ContractRepository;
+import com.order.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +42,11 @@ public class OrderServiceImpl implements OrderService {
 	private EntityManager em;
 	@Autowired
 	private OrderRepository orderRepository;
-	
+	@Autowired
+	private CustomerRepository customerRepository;
+	@Autowired
+	private ContractRepository contractRepository;
+
 	@Override
 	public ResultUtils addOrder(OrderEntity params) {
 		// 保存客户信息
@@ -239,16 +242,21 @@ public class OrderServiceImpl implements OrderService {
 	public PageUtils queryList(final Query query) {
 		Specification<OrderEntity> specification = new Specification<OrderEntity>() {
 			@Override
-			public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+			public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> qy, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<>();
-				return null; 
+				String fieldName = (String) query.get("fieldName");
+				if(null != fieldName && !"".equals(fieldName)) {
+					Predicate predicate = cb.like(root.<String>get(fieldName), "%" + query.get("keyword") + "%");
+					predicates.add(predicate);
+				}
+				return cb.and(predicates.toArray(new Predicate[0]));
 			}
 		};
 		List<Order> orders = new ArrayList<>();
 		orders.add(new Order(Direction.DESC, "createTime"));
 		Pageable pageable = new PageRequest(query.getPage() - 1, query.getLimit(), new Sort(orders));
 		Page<OrderEntity> page = orderRepository.findAll(specification, pageable);
-		
+
 		List<OrderEntity> list = page.getContent();
 		for(OrderEntity order : list) {
 			CustomerEntity customer = em.find(CustomerEntity.class, order.getCustomerId());
@@ -388,6 +396,10 @@ public class OrderServiceImpl implements OrderService {
 		order.setOwnerProject(params.getOwnerProject());
 //		order.setStatus((int) params.get("status"));
 //		order.setIsUseNetwork((int) params.get("isUseNetwork"));
+        order.setCustomerName(params.getCustomer().getName());
+        order.setContractAmount(params.getContract().getContractAmount());
+        order.setAreaId(params.getCustomer().getAreaId());
+        order.setAddress(params.getCustomer().getAddress());
 		order.setCustomerId(customer.getId());
 		order.setContractId(contract.getId());
 		order.setBroadbandId(broadband.getId());

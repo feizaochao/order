@@ -119,9 +119,14 @@ public class CustomerServiceImpl implements CustomerService {
 	public PageUtils queryList(final Query query) {
 		Specification<CustomerEntity> specification = new Specification<CustomerEntity>() {
 			@Override
-			public Predicate toPredicate(Root<CustomerEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+			public Predicate toPredicate(Root<CustomerEntity> root, CriteriaQuery<?> qy, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<>();
-				return null;
+				String fieldName = (String) query.get("fieldName");
+				if(null != fieldName && !"".equals(fieldName)) {
+				    Predicate predicate = cb.like(root.<String>get(fieldName), "%" + query.get("keyword") + "%");
+				    predicates.add(predicate);
+                }
+				return cb.and(predicates.toArray(new Predicate[0]));
 			}
 		};
 		List<Order> orders = new ArrayList<>();

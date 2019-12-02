@@ -45,7 +45,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 
 		// 2.生成Token
-		tokenService.createToken(user.getId());
+//		tokenService.createToken(user.getId());
 
 		// 3.查询账号角色和权限
 		Long roleId = roleService.queryRoleByUserId(user.getId());

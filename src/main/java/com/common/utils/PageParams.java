@@ -18,6 +18,10 @@ public class PageParams {
     private int page;
     @ApiModelProperty(value = "每页记录数", dataType = "int", example = "10")
     private int limit;
+    @ApiModelProperty(value = "字段名", dataType = "string")
+    private String fieldName;
+    @ApiModelProperty(value = "搜索值", dataType = "string")
+    private String keyword;
 
     public int getPage() {
         return page;
@@ -35,10 +39,28 @@ public class PageParams {
         this.limit = limit;
     }
 
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
     public Map<String, Object> toMap() {
         Map<String, Object> params = new HashMap<>();
         params.put("page", getPage());
         params.put("limit", getLimit());
+        params.put("fieldName", getFieldName());
+        params.put("keyword", getKeyword());
         return params;
     }
 }

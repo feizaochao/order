@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.math.BigDecimal;
 
 /**
 * @Description: TODO
@@ -94,6 +95,22 @@ public class OrderEntity extends BaseEntity {
     @ApiModelProperty(value = "备注", dataType = "string")
 	private String remarks;
 
+	@Column
+    @ApiModelProperty(value = "客户名称", dataType = "string")
+	private String customerName;
+
+	@Column
+    @ApiModelProperty(value = "客户地址", dataType = "String")
+	private String address;
+
+	@Column
+    @ApiModelProperty(value = "合同金额", dataType = "double")
+	private BigDecimal contractAmount;
+
+	@Column
+    @ApiModelProperty(value = "片区id", dataType = "long")
+	private Long areaId;
+
 	@Transient
     @ApiModelProperty(value = "客户实体", dataType = "object")
 	private CustomerEntity customer;
@@ -122,9 +139,9 @@ public class OrderEntity extends BaseEntity {
     @ApiModelProperty(value = "运营商实体", dataType = "object")
 	private OrderOperatorEntity operator;
 
-	@Transient
+    @Transient
     @ApiModelProperty(value = "片区名", dataType = "string")
-	private String areaName;
+    private String areaName;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -304,5 +321,37 @@ public class OrderEntity extends BaseEntity {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public BigDecimal getContractAmount() {
+        return contractAmount;
+    }
+
+    public void setContractAmount(BigDecimal contractAmount) {
+        this.contractAmount = contractAmount;
+    }
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
     }
 }

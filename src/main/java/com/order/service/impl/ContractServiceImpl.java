@@ -77,9 +77,14 @@ public class ContractServiceImpl implements ContractService {
 	public PageUtils queryList(final Query query) {
 		Specification<ContractEntity> specification = new Specification<ContractEntity>() {
 			@Override
-			public Predicate toPredicate(Root<ContractEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+			public Predicate toPredicate(Root<ContractEntity> root, CriteriaQuery<?> qy, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<>();
-				return null;
+				String fieldName = (String) query.get("fieldName");
+				if(null != fieldName && !"".equals(fieldName)) {
+					Predicate predicate = cb.like(root.<String>get(fieldName), "%" + query.get("keyword") + "%");
+					predicates.add(predicate);
+				}
+				return cb.and(predicates.toArray(new Predicate[0]));
 			}
 		};
 		List<Order> orders = new ArrayList<>();

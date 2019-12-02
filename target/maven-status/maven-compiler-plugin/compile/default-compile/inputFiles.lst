@@ -111,6 +111,7 @@ D:\Code\git\order\src\main\java\com\order\entity\OrderEntity.java
 D:\Code\git\order\src\main\java\com\modules\sys\controller\SysDeptController.java
 D:\Code\git\order\src\main\java\com\modules\sys\controller\SysRoleController.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysUserRoleService.java
+D:\Code\git\order\src\main\java\com\common\utils\WXRequestParams.java
 D:\Code\git\order\src\main\java\com\common\utils\PageParams.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysLogService.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\impl\SysConfigServiceImpl.java
@@ -125,6 +126,7 @@ D:\Code\git\order\src\main\java\com\modules\sys\dao\SysConfigDao.java
 D:\Code\git\order\src\main\java\com\modules\sys\oauth2\OAuth2Token.java
 D:\Code\git\order\src\main\java\com\order\config\SwaggerConfig.java
 D:\Code\git\order\src\main\java\com\modules\oss\cloud\CloudStorageConfig.java
+D:\Code\git\order\src\main\java\com\common\utils\HttpClient.java
 D:\Code\git\order\src\main\java\com\common\utils\RedisUtils.java
 D:\Code\git\order\src\main\java\com\order\entity\MenuEntity.java
 D:\Code\git\order\src\main\java\com\modules\sys\oauth2\TokenGenerator.java
