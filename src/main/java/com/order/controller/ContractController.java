@@ -1,7 +1,10 @@
 package com.order.controller;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Map;
 
+import com.alibaba.excel.EasyExcel;
 import com.common.utils.*;
 import com.order.entity.ContractEntity;
 import io.swagger.annotations.Api;
@@ -11,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import com.order.service.ContractService;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
 * @Description: TODO
@@ -57,4 +62,14 @@ public class ContractController {
 	public ResultUtils queryOne(Long id) {
 		return contractService.queryOne(id);
 	}
+
+	@GetMapping("/exportAll")
+	public void exportAllData(HttpServletResponse response) throws IOException {
+		response.setContentType("application/vnd.ms-excel");
+		response.setCharacterEncoding("utf-8");
+		String fileName = URLEncoder.encode("合同", "UTF-8");
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+		EasyExcel.write(response.getOutputStream(), ContractEntity.class).sheet("模板").doWrite(contractService.exportAllData());
+	}
+
 }

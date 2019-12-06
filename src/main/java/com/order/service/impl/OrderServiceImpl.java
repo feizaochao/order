@@ -12,6 +12,7 @@ import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 
 import com.common.utils.*;
+import com.order.data.OrderData;
 import com.order.entity.*;
 import com.order.repository.ContractRepository;
 import com.order.repository.CustomerRepository;
@@ -318,6 +319,12 @@ public class OrderServiceImpl implements OrderService {
 		return ResultUtils.success("", order);
 	}
 
+	@Override
+	public List<OrderData> exportAllData() {
+		List<OrderEntity> orders = orderRepository.findAll();
+		return buildExportData(orders);
+	}
+
 	/*组装客户信息*/
 	private void buildCustomer(CustomerEntity customer, CustomerEntity params) {
 		customer.setMallNo(params.getMallNo());
@@ -396,10 +403,10 @@ public class OrderServiceImpl implements OrderService {
 		order.setOwnerProject(params.getOwnerProject());
 //		order.setStatus((int) params.get("status"));
 //		order.setIsUseNetwork((int) params.get("isUseNetwork"));
-        order.setCustomerName(params.getCustomer().getName());
-        order.setContractAmount(params.getContract().getContractAmount());
-        order.setAreaId(params.getCustomer().getAreaId());
-        order.setAddress(params.getCustomer().getAddress());
+        order.setCustomerName(customer.getName());
+        order.setContractAmount(contract.getContractAmount());
+        order.setAreaId(customer.getAreaId());
+        order.setAddress(customer.getAddress());
 		order.setCustomerId(customer.getId());
 		order.setContractId(contract.getId());
 		order.setBroadbandId(broadband.getId());
@@ -407,5 +414,103 @@ public class OrderServiceImpl implements OrderService {
 		order.setInvoiceId(invoiceEntity.getId());
 		order.setOperatorId(operatorEntity.getId());
 		order.setNewBusinessId(newBusinessEntity.getId());
+	}
+
+	private List<OrderData> buildExportData(List<OrderEntity> orders) {
+		List<OrderData> results = new ArrayList<>();
+		for(OrderEntity order : orders) {
+			OrderData orderData = new OrderData();
+			CustomerEntity customer = null;
+			AreaEntity area = null;
+			if(null != order.getCustomerId()) {
+				customer = em.find(CustomerEntity.class, order.getCustomerId());
+				orderData.setCustomerName(customer.getName());
+				orderData.setContact(customer.getContact());
+				orderData.setMailNo(customer.getMallNo());
+				orderData.setLicenseNo(customer.getLicenseNo());
+				orderData.setPersist(customer.getPersist() == 0 ? "不存留" : "存留");
+				orderData.setLicenseAddress(customer.getLicenseAddress());
+				orderData.setAddress(customer.getAddress());
+				orderData.setRemarks(customer.getRemarks());
+				if(null != customer.getAreaId()) {
+					area = em.find(AreaEntity.class, customer.getAreaId());
+					orderData.setAreaName(customer.getAreaName());
+				}
+			}
+
+			ContractEntity contract = null;
+			if(null != order.getContractId()) {
+				contract = em.find(ContractEntity.class, order.getContractId());
+				orderData.setSiteName(contract.getSiteName());
+				orderData.setContractNo(contract.getContractNo());
+				orderData.setPartyA(contract.getPartyA());
+				orderData.setPartyB(contract.getPartyB());
+				orderData.setContractStartTime(contract.getContractStartTime());
+				orderData.setContractEndTime(contract.getContractEndTime());
+				orderData.setContractAmount(contract.getContractAmount());
+				orderData.setElectricityFee(contract.getElectricityFee());
+				orderData.setStartTime(contract.getStartTime());
+				orderData.setEndTime(contract.getEndTime());
+				orderData.setElectricityCharge(contract.getElectricityCharge());
+				orderData.setElectricitySubmitType(contract.getElectricitySubmitType() == 0 ? "未交" : "已交");
+				orderData.setElectricityPaid(contract.getElectricityPaid());
+				orderData.setPaidTime(contract.getPaidTime());
+			}
+			OrderBroadbandEntity broadband = null;
+			if(null != order.getBroadbandId()) {
+				broadband = em.find(OrderBroadbandEntity.class, order.getBroadbandId());
+				orderData.setOperator(broadband.getOperator());
+				orderData.setType(broadband.getType());
+				orderData.setPrice(broadband.getPrice());
+				orderData.setPhoneNum(broadband.getPhoneNum());
+				orderData.setVoiceTariff(broadband.getVoiceTariff());
+			}
+			OrderChargeEntity charge = null;
+			if(null != order.getChargeId()) {
+				charge = em.find(OrderChargeEntity.class, order.getChargeId());
+				orderData.setChargeAmount(charge.getChargeAmount());
+				orderData.setChargeDate(charge.getChargeDate());
+				orderData.setNextChargeDate(charge.getNextChargeDate());
+			}
+			OrderInvoiceEntity invoice = null;
+			if(null != order.getInvoiceId()) {
+				invoice = em.find(OrderInvoiceEntity.class, order.getInvoiceId());
+				orderData.setIsInvoice(invoice.getIsInvoice() == 0 ? "否" : "是");
+				orderData.setInvoiceType(invoice.getType() == 0 ? "" : "");
+				orderData.setInvoiceDate(invoice.getInvoiceDate());
+				orderData.setInvoiceNum(invoice.getInvoiceNum());
+			}
+			OrderOperatorEntity operator = null;
+			if(null != order.getOperatorId()) {
+				operator = em.find(OrderOperatorEntity.class, order.getOperatorId());
+				orderData.setProductNum(operator.getProductNum());
+				orderData.setAccountStatus(operator.getAccountStatus() == 0 ? "" : "");
+				orderData.setInternetAccount(operator.getInternetAccount());
+				orderData.setBroadband(operator.getBroadband());
+				orderData.setOperatorPhone(operator.getPhone());
+				orderData.setPaymentCycle(operator.getPaymentCycle());
+				orderData.setPaymentDate(operator.getPaymentDate());
+				orderData.setOperatorInvoiceDate(operator.getInvoiceDate());
+				orderData.setOperatorContact(operator.getContact());
+				orderData.setRenewContract(operator.getRenewContract());
+				orderData.setOperatorInvoiceNum(operator.getInvoiceNum());
+				orderData.setPrimaryCharge(operator.getPrimaryCharge());
+			}
+			OrderNewBusinessEntity newBusiness = null;
+			if(null != order.getNewBusinessId()) {
+				newBusiness =  em.find(OrderNewBusinessEntity.class, order.getNewBusinessId());
+				orderData.setRequestOrder(newBusiness.getRequestOrder());
+				orderData.setMonth(newBusiness.getMonth());
+				orderData.setDate(newBusiness.getDate());
+				orderData.setCounterpart(newBusiness.getCounterpart());
+			}
+			orderData.setOrderNo(order.getOrderNo());
+			orderData.setOwnerProject(order.getOwnerProject());
+			orderData.setStatus(order.getStatus() == 0 ? "" : "");
+			orderData.setIsUseNetWork(order.getIsUseNetwork() == 0 ? "否" : "是");
+			orderData.setAreaNumber(order.getAreaNumber());
+			results.add(orderData);
+		}
+		return results;
 	}
 }

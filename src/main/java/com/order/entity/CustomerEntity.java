@@ -6,6 +6,8 @@ package com.order.entity;
 * @version v1.0
 */
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -27,55 +29,66 @@ public class CustomerEntity extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ApiModelProperty(value = "id", dataType = "long")
+	@ExcelIgnore
 	private Long id;
 	
 	/*客户名称*/
 	@Column
 	@ApiModelProperty(value = "客户名称", dataType = "string")
+	@ExcelProperty("客户名称")
 	private String name;
 	
 	/*片区号*/
 	@Column
 	@ApiModelProperty(value = "片区号", dataType = "long")
+	@ExcelProperty("片区号")
 	private Long areaId;
 	
 	/*联系人*/
 	@Column
 	@ApiModelProperty(value = "联系人", dataType = "string")
+	@ExcelProperty("联系人")
 	private String contact;
 	
 	/*商城编号*/
 	@Column
 	@ApiModelProperty(value = "商城编号", dataType = "string")
+	@ExcelProperty("商城编号")
 	private String mallNo;
 	
 	/*证件号*/
 	@Column
 	@ApiModelProperty(value = "证件号", dataType = "string")
+	@ExcelProperty("证件号")
 	private String licenseNo;
 	
 	/*存留信息*/
 	@Column
 	@ApiModelProperty(value = "客户存留信息", dataType = "int")
+	@ExcelProperty("客户存留信息")
 	private int persist;
 	
 	/*证件地址*/
 	@Column
 	@ApiModelProperty(value = "证件地址", dataType = "string")
+	@ExcelProperty("证件地址")
 	private String licenseAddress;
 	
 	/*地址*/
 	@Column
 	@ApiModelProperty(value = "地址", dataType = "string")
+	@ExcelProperty("地址")
 	private String address;
 	
 	/*备注*/
 	@Column
 	@ApiModelProperty(value = "备注", dataType = "string")
+	@ExcelProperty("备注")
 	private String remarks;
 
 	@Transient
 	@ApiModelProperty(value = "片区名", dataType = "string")
+	@ExcelProperty("片区名")
 	private String areaName;
 	
 	public Long getId() {

@@ -1,8 +1,14 @@
 package com.order.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.common.utils.*;
+import com.order.data.OrderData;
 import com.order.entity.OrderEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -11,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.order.service.OrderService;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
 * @Description: TODO
@@ -56,5 +64,14 @@ public class OrderController {
 	@ApiOperation("获取单个订单")
 	public ResultUtils queryOne(Long id) {
 		return orderService.queryOne(id);
+	}
+
+	@GetMapping("/exportAll")
+	public void exportAll(HttpServletResponse response) throws IOException {
+		response.setContentType("application/vnd.ms-excel");
+		response.setCharacterEncoding("utf-8");
+		String fileName = URLEncoder.encode("订单", "UTF-8");
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+		EasyExcel.write(response.getOutputStream(), OrderData.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(orderService.exportAllData());
 	}
 }

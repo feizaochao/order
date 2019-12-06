@@ -1,7 +1,10 @@
 package com.order.controller;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Map;
 
+import com.alibaba.excel.EasyExcel;
 import com.common.utils.*;
 import com.order.entity.CustomerEntity;
 import io.swagger.annotations.Api;
@@ -10,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.order.service.CustomerService;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
 * @Description: TODO
@@ -58,5 +63,14 @@ public class CustomerController {
 		map.put("id", customerId);
 		Query query = new Query(map);
 		return customerService.queryOne(query);
+	}
+
+	@GetMapping("/exportAll")
+	public void exportAllData(HttpServletResponse response) throws IOException {
+		response.setContentType("application/vnd.ms-excel");
+		response.setCharacterEncoding("utf-8");
+		String fileName = URLEncoder.encode("客户", "UTF-8");
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+		EasyExcel.write(response.getOutputStream(), CustomerEntity.class).sheet("模板").doWrite(customerService.exportAllData());
 	}
 }

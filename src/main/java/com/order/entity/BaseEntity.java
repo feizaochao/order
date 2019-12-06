@@ -1,5 +1,6 @@
 package com.order.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,10 +24,12 @@ public class BaseEntity implements Serializable {
 
 	@Column(name = "create_time", length = 10, nullable = true)
 	@ApiModelProperty(value = "新增时间", dataType = "date")
+	@ExcelProperty("新增时间")
 	private Date createTime;
 	
 	@Column(name = "update_time", length = 10, nullable = true)
 	@ApiModelProperty(value = "修改时间", dataType = "date")
+	@ExcelProperty("修改时间")
 	private Date updateTime;
 
 	public Date getCreateTime() {

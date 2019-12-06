@@ -1,5 +1,6 @@
 package com.order.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.common.utils.PageUtils;
@@ -25,4 +26,6 @@ public interface CustomerService {
 	PageUtils queryList(Query query);
 
 	R queryOne(Query query);
+
+	List<CustomerEntity> exportAllData();
 }

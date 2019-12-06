@@ -104,6 +104,11 @@ public class ContractServiceImpl implements ContractService {
 		return ResultUtils.ok();
 	}
 
+	@Override
+	public List<ContractEntity> exportAllData() {
+		return contractRepository.findAll();
+	}
+
 	private void buildContract(ContractEntity contract, ContractEntity params) {
 		contract.setSiteName(params.getSiteName());
 		contract.setContractName(params.getContractName());

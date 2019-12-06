@@ -187,6 +187,18 @@ public class CustomerServiceImpl implements CustomerService {
 		return r;
 	}
 
+	@Override
+	public List<CustomerEntity> exportAllData() {
+		List<CustomerEntity> results = customerRepository.findAll();
+		for(CustomerEntity customer : results) {
+			if(null != customer.getAreaId()) {
+				AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
+				customer.setAreaName(area.getAreaName());
+			}
+		}
+		return results;
+	}
+
 	private void buildCustomer(CustomerEntity customer, CustomerEntity params) {
 		customer.setName(params.getName());
 		customer.setAreaId(params.getAreaId());
@@ -198,5 +210,4 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setAddress(params.getAddress());
 		customer.setRemarks(params.getRemarks());
 	}
-
 }
