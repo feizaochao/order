@@ -9,6 +9,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.common.utils.*;
 import com.order.data.OrderData;
+import com.order.data.OrderUploadListener;
 import com.order.entity.OrderEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.order.service.OrderService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -74,4 +76,10 @@ public class OrderController {
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		EasyExcel.write(response.getOutputStream(), OrderData.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(orderService.exportAllData());
 	}
+
+	@PostMapping("/upload")
+	public ResultUtils upload(MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(), OrderData.class, new OrderUploadListener(orderService)).sheet().doRead();
+        return ResultUtils.ok();
+    }
 }

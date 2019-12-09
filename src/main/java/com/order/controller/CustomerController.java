@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.alibaba.excel.EasyExcel;
 import com.common.utils.*;
+import com.order.data.CustomerUploadListener;
 import com.order.entity.CustomerEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.order.service.CustomerService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -72,5 +74,11 @@ public class CustomerController {
 		String fileName = URLEncoder.encode("客户", "UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		EasyExcel.write(response.getOutputStream(), CustomerEntity.class).sheet("模板").doWrite(customerService.exportAllData());
+	}
+
+	@PostMapping("/upload")
+	public ResultUtils upload(MultipartFile file) throws IOException {
+		EasyExcel.read(file.getInputStream(), CustomerEntity.class, new CustomerUploadListener(customerService)).sheet().doRead();
+		return ResultUtils.ok();
 	}
 }

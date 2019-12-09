@@ -6,7 +6,9 @@ com\modules\oss\cloud\QcloudCloudStorageService.class
 com\modules\sys\service\SysUserRoleService.class
 com\modules\sys\dao\BaseDao.class
 com\modules\sys\controller\SysRoleController.class
+com\order\data\ContractUploadListener.class
 com\modules\sys\service\SysRoleMenuService.class
+com\order\data\OrderUploadListener.class
 com\modules\api\entity\TokenEntity.class
 com\order\service\impl\CustomerServiceImpl$1.class
 com\modules\api\config\WebMvcConfig.class
@@ -82,6 +84,7 @@ com\modules\sys\service\SysLogService.class
 com\order\repository\OrderRepository.class
 com\modules\oss\service\SysOssService.class
 com\common\aspect\RedisAspect.class
+com\order\data\OrderData.class
 com\order\entity\RoleEntity.class
 com\order\service\impl\OrderServiceImpl$1.class
 com\datasources\DataSourceTestService.class
@@ -179,6 +182,7 @@ com\modules\sys\dao\SysUserRoleDao.class
 com\modules\sys\entity\SysConfigEntity.class
 com\order\entity\ContractEntity.class
 com\modules\sys\dao\SysConfigDao.class
+com\order\service\impl\BaseSpecification.class
 com\order\controller\LoginController.class
 com\common\utils\HttpContextUtils.class
 com\modules\oss\cloud\QiniuCloudStorageService.class
@@ -187,4 +191,5 @@ com\order\controller\OrderController.class
 com\common\validator\group\AliyunGroup.class
 com\order\entity\OrderEntity.class
 com\modules\oss\entity\SysOssEntity.class
+com\order\data\CustomerUploadListener.class
 com\order\repository\RoleMenuRepository.class

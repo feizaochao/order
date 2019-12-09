@@ -2,18 +2,18 @@ package com.order.controller;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.Map;
 
 import com.alibaba.excel.EasyExcel;
 import com.common.utils.*;
+import com.order.data.ContractUploadListener;
 import com.order.entity.ContractEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import com.order.service.ContractService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -70,6 +70,12 @@ public class ContractController {
 		String fileName = URLEncoder.encode("合同", "UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		EasyExcel.write(response.getOutputStream(), ContractEntity.class).sheet("模板").doWrite(contractService.exportAllData());
+	}
+
+	@PostMapping("/upload")
+	public ResultUtils upload(MultipartFile file) throws IOException {
+		EasyExcel.read(file.getInputStream(), ContractEntity.class, new ContractUploadListener(contractService)).sheet().doRead();
+		return ResultUtils.ok();
 	}
 
 }

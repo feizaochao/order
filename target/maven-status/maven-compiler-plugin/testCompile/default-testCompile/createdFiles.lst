@@ -1,4 +1,7 @@
+com\test\TestFileUtil.class
 io\renren\DynamicDataSourceTest.class
 com\test\UserRoleTest.class
 com\test\RoleMenuTest.class
+com\test\WriteTest.class
+com\test\DemoData.class
 io\renren\RedisTest.class

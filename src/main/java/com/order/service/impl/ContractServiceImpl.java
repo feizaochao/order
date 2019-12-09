@@ -124,5 +124,6 @@ public class ContractServiceImpl implements ContractService {
 		contract.setElectricitySubmitType(params.getElectricitySubmitType());
 		contract.setElectricityPaid(params.getElectricityPaid());
 		contract.setPaidTime(params.getPaidTime());
+		contract.setContractAmount(params.getContractAmount());
 	}
 }
