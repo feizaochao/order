@@ -264,8 +264,10 @@ public class OrderServiceImpl implements OrderService {
 			ContractEntity contract = em.find(ContractEntity.class, order.getContractId());
 			order.setCustomer(customer);
 			order.setContract(contract);
-			AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
-			order.setAreaName(area.getAreaName());
+			if(null != customer.getAreaId()) {
+				AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
+				order.setAreaName(area.getAreaName());
+			}
 		}
 		PageUtils pageUtils = new PageUtils(list, Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		return pageUtils;

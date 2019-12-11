@@ -53,6 +53,12 @@ public class RoleController {
 		return ResultUtils.success("", roleService.queryList());
 	}
 
+	@ApiOperation("获取单个角色")
+	@GetMapping(value = "/one")
+	public ResultUtils queryOne(Long id) {
+		return roleService.queryOne(id);
+	}
+
 	@ApiOperation("保存角色菜单信息")
 	@PostMapping(value = "/save_authority")
 	public ResultUtils saveMenus(Long roleId, Long[] menuIds) {

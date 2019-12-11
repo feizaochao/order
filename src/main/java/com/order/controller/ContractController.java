@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.common.utils.*;
 import com.order.data.ContractUploadListener;
 import com.order.entity.ContractEntity;
@@ -69,7 +70,7 @@ public class ContractController {
 		response.setCharacterEncoding("utf-8");
 		String fileName = URLEncoder.encode("合同", "UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), ContractEntity.class).sheet("模板").doWrite(contractService.exportAllData());
+		EasyExcel.write(response.getOutputStream(), ContractEntity.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(contractService.exportAllData());
 	}
 
 	@PostMapping("/upload")

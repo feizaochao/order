@@ -87,6 +87,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	public ResultUtils queryOne(Long id) {
+		RoleEntity role = em.find(RoleEntity.class, id);
+		return ResultUtils.success("", role);
+	}
+
+	@Override
 	public Long queryRoleByUserId(Long userId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select role_id from e_user_role where user_id = :userId");

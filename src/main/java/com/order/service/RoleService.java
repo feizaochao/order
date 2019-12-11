@@ -21,6 +21,8 @@ public interface RoleService {
 	ResultUtils deleteRole(Long id);
 	
 	List<Map<String, Object>> queryList();
+
+	ResultUtils queryOne(Long id);
 	
 	Long queryRoleByUserId(Long userId);
 

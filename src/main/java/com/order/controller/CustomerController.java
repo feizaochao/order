@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.common.utils.*;
 import com.order.data.CustomerUploadListener;
 import com.order.entity.CustomerEntity;
@@ -73,7 +74,7 @@ public class CustomerController {
 		response.setCharacterEncoding("utf-8");
 		String fileName = URLEncoder.encode("客户", "UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), CustomerEntity.class).sheet("模板").doWrite(customerService.exportAllData());
+		EasyExcel.write(response.getOutputStream(), CustomerEntity.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(customerService.exportAllData());
 	}
 
 	@PostMapping("/upload")

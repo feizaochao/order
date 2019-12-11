@@ -133,15 +133,17 @@ public class CustomerServiceImpl implements CustomerService {
 		orders.add(new Order(Direction.DESC, "createTime"));
 		Pageable pageable = new PageRequest(query.getPage() - 1, query.getLimit(), new Sort(orders));
 		Page<CustomerEntity> page = customerRepository.findAll(specification, pageable);
-		
+
 		StringBuilder sql = new StringBuilder();
 		sql.append("select areaName from AreaEntity where id = :areaId");
 		List<CustomerEntity> list = page.getContent();
 		for(CustomerEntity customer : list) {
-			javax.persistence.Query qy = em.createQuery(sql.toString());
-			qy.setParameter("areaId", customer.getAreaId());
-			String areaName = (String) qy.getSingleResult();
-			customer.setAreaName(areaName);
+			if(null != customer.getAreaId()) {
+				javax.persistence.Query qy = em.createQuery(sql.toString());
+				qy.setParameter("areaId", customer.getAreaId());
+				String areaName = (String) qy.getSingleResult();
+				customer.setAreaName(areaName);
+			}
 		}
 		PageUtils pageUtils = new PageUtils(page.getContent(), Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		return pageUtils;
