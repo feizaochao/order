@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 
 import com.common.utils.ResultUtils;
 import com.order.entity.*;
+import com.order.repository.DictRepository;
 import com.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,6 +48,8 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerRepository customerRepository;
 	@Autowired
 	private OrderRepository orderRepository;
+	@Autowired
+	private DictRepository dictRepository;
 	
 	@Override
 	public ResultUtils addCustomer(CustomerEntity params) {
@@ -144,6 +147,10 @@ public class CustomerServiceImpl implements CustomerService {
 				String areaName = (String) qy.getSingleResult();
 				customer.setAreaName(areaName);
 			}
+			DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndValue(2l, customer.getPersist());
+			if(null != dictValueEntity) {
+				customer.setPersistName(dictValueEntity.getName());
+			}
 		}
 		PageUtils pageUtils = new PageUtils(page.getContent(), Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		return pageUtils;
@@ -183,6 +190,7 @@ public class CustomerServiceImpl implements CustomerService {
 			order.setContract(contract);
 			AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
 			order.setAreaName(area.getAreaName());
+
 		}
 		PageUtils pageUtils = new PageUtils(list, Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		r.put("orderData", pageUtils);
@@ -196,6 +204,10 @@ public class CustomerServiceImpl implements CustomerService {
 			if(null != customer.getAreaId()) {
 				AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
 				customer.setAreaName(area.getAreaName());
+			}
+			DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndValue(2l, customer.getPersist());
+			if(null != dictValueEntity) {
+				customer.setPersistName(dictValueEntity.getName());
 			}
 		}
 		return results;

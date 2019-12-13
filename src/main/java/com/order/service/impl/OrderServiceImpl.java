@@ -12,10 +12,12 @@ import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 
 import com.common.utils.*;
+import com.order.data.DictType;
 import com.order.data.OrderData;
 import com.order.entity.*;
 import com.order.repository.ContractRepository;
 import com.order.repository.CustomerRepository;
+import com.order.repository.DictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
 	private CustomerRepository customerRepository;
 	@Autowired
 	private ContractRepository contractRepository;
+	@Autowired
+	private DictRepository dictRepository;
 
 	@Override
 	public ResultUtils addOrder(OrderEntity params) {
@@ -268,6 +272,10 @@ public class OrderServiceImpl implements OrderService {
 				AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
 				order.setAreaName(area.getAreaName());
 			}
+			DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.TRADE_STATUS, order.getStatus());
+			if(null != dictValueEntity) {
+				order.setStatusName(dictValueEntity.getName());
+			}
 		}
 		PageUtils pageUtils = new PageUtils(list, Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		return pageUtils;
@@ -332,7 +340,7 @@ public class OrderServiceImpl implements OrderService {
 		customer.setMallNo(params.getMallNo());
 		customer.setName(params.getName());
 		customer.setAreaId(params.getAreaId());
-//		customer.setPersist((Integer) params.get("persist"));
+		customer.setPersist(params.getPersist());
 		customer.setAddress(params.getAddress());
 		customer.setContact(params.getContact());
 		customer.setLicenseNo(params.getLicenseNo());
@@ -403,8 +411,8 @@ public class OrderServiceImpl implements OrderService {
 							OrderNewBusinessEntity newBusinessEntity, OrderEntity params) {
 		order.setOrderNo(params.getOrderNo());
 		order.setOwnerProject(params.getOwnerProject());
-//		order.setStatus((int) params.get("status"));
-//		order.setIsUseNetwork((int) params.get("isUseNetwork"));
+		order.setStatus(params.getStatus());
+		order.setIsUseNetwork(params.getIsUseNetwork());
         order.setCustomerName(customer.getName());
         order.setContractAmount(contract.getContractAmount());
         order.setAreaId(customer.getAreaId());
@@ -424,13 +432,17 @@ public class OrderServiceImpl implements OrderService {
 			OrderData orderData = new OrderData();
 			CustomerEntity customer = null;
 			AreaEntity area = null;
+			DictValueEntity dictValueEntity = null;
 			if(null != order.getCustomerId()) {
 				customer = em.find(CustomerEntity.class, order.getCustomerId());
 				orderData.setCustomerName(customer.getName());
 				orderData.setContact(customer.getContact());
 				orderData.setMailNo(customer.getMallNo());
 				orderData.setLicenseNo(customer.getLicenseNo());
-				orderData.setPersist(customer.getPersist() == 0 ? "不存留" : "存留");
+				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.PERSIST, customer.getPersist());
+				if(null != dictValueEntity) {
+					orderData.setPersist(dictValueEntity.getName());
+				}
 				orderData.setLicenseAddress(customer.getLicenseAddress());
 				orderData.setAddress(customer.getAddress());
 				orderData.setRemarks(customer.getRemarks());
@@ -454,7 +466,7 @@ public class OrderServiceImpl implements OrderService {
 				orderData.setStartTime(contract.getStartTime());
 				orderData.setEndTime(contract.getEndTime());
 				orderData.setElectricityCharge(contract.getElectricityCharge());
-				orderData.setElectricitySubmitType(contract.getElectricitySubmitType() == 0 ? "未交" : "已交");
+				orderData.setElectricitySubmitType(contract.getElectricitySubmitType());
 				orderData.setElectricityPaid(contract.getElectricityPaid());
 				orderData.setPaidTime(contract.getPaidTime());
 			}
@@ -462,7 +474,10 @@ public class OrderServiceImpl implements OrderService {
 			if(null != order.getBroadbandId()) {
 				broadband = em.find(OrderBroadbandEntity.class, order.getBroadbandId());
 				orderData.setOperator(broadband.getOperator());
-				orderData.setType(broadband.getType());
+				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.BROADBAND_TYPE, broadband.getType());
+				if(null != dictValueEntity) {
+					orderData.setType(dictValueEntity.getName());
+				}
 				orderData.setPrice(broadband.getPrice());
 				orderData.setPhoneNum(broadband.getPhoneNum());
 				orderData.setVoiceTariff(broadband.getVoiceTariff());
@@ -477,8 +492,11 @@ public class OrderServiceImpl implements OrderService {
 			OrderInvoiceEntity invoice = null;
 			if(null != order.getInvoiceId()) {
 				invoice = em.find(OrderInvoiceEntity.class, order.getInvoiceId());
-				orderData.setIsInvoice(invoice.getIsInvoice() == 0 ? "否" : "是");
-				orderData.setInvoiceType(invoice.getType() == 0 ? "" : "");
+				orderData.setIsInvoice(invoice.getIsInvoice());
+				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.INVOICE_TYPE, invoice.getType());
+				if(null != dictValueEntity) {
+					orderData.setInvoiceType(dictValueEntity.getName());
+				}
 				orderData.setInvoiceDate(invoice.getInvoiceDate());
 				orderData.setInvoiceNum(invoice.getInvoiceNum());
 			}
@@ -486,7 +504,10 @@ public class OrderServiceImpl implements OrderService {
 			if(null != order.getOperatorId()) {
 				operator = em.find(OrderOperatorEntity.class, order.getOperatorId());
 				orderData.setProductNum(operator.getProductNum());
-				orderData.setAccountStatus(operator.getAccountStatus() == 0 ? "" : "");
+				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.OPERATOR_ACCOUNT_TYPE, operator.getAccountStatus());
+				if(null != dictValueEntity) {
+					orderData.setAccountStatus(dictValueEntity.getName());
+				}
 				orderData.setInternetAccount(operator.getInternetAccount());
 				orderData.setBroadband(operator.getBroadband());
 				orderData.setOperatorPhone(operator.getPhone());
@@ -508,8 +529,11 @@ public class OrderServiceImpl implements OrderService {
 			}
 			orderData.setOrderNo(order.getOrderNo());
 			orderData.setOwnerProject(order.getOwnerProject());
-			orderData.setStatus(order.getStatus() == 0 ? "" : "");
-			orderData.setIsUseNetWork(order.getIsUseNetwork() == 0 ? "否" : "是");
+			dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.TRADE_STATUS, order.getStatus());
+			if(null != dictValueEntity) {
+				orderData.setStatus(dictValueEntity.getName());
+			}
+			orderData.setIsUseNetWork(order.getIsUseNetwork());
 			orderData.setAreaNumber(order.getAreaNumber());
 			results.add(orderData);
 		}

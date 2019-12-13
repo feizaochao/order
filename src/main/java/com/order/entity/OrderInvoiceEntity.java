@@ -25,7 +25,7 @@ public class OrderInvoiceEntity extends BaseEntity {
     /*是否开票*/
     @Column(nullable = true)
     @ApiModelProperty(value = "是否开票", dataType = "int")
-    private int isInvoice;
+    private String isInvoice;
 
     /*开票类型*/
     @Column(nullable = true)
@@ -50,11 +50,11 @@ public class OrderInvoiceEntity extends BaseEntity {
         this.id = id;
     }
 
-    public int getIsInvoice() {
+    public String getIsInvoice() {
         return isInvoice;
     }
 
-    public void setIsInvoice(int isInvoice) {
+    public void setIsInvoice(String isInvoice) {
         this.isInvoice = isInvoice;
     }
 

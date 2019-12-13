@@ -13,4 +13,5 @@ import com.order.entity.AreaEntity;
 */
 public interface AreaRepository extends JpaRepository<AreaEntity, Long>, JpaSpecificationExecutor<AreaEntity> {
 
+    AreaEntity findByAreaName(String areaName);
 }

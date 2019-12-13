@@ -45,6 +45,7 @@ D:\Code\git\order\src\main\java\com\common\utils\ConfigConstant.java
 D:\Code\git\order\src\main\java\com\modules\sys\entity\SysRoleEntity.java
 D:\Code\git\order\src\main\java\com\modules\sys\entity\SysUserEntity.java
 D:\Code\git\order\src\main\java\com\order\entity\OrderChargeEntity.java
+D:\Code\git\order\src\main\java\com\order\data\DictType.java
 D:\Code\git\order\src\main\java\com\modules\sys\dao\SysUserDao.java
 D:\Code\git\order\src\main\java\com\order\service\MenuService.java
 D:\Code\git\order\src\main\java\com\datasources\DataSourceTestService.java
@@ -74,7 +75,10 @@ D:\Code\git\order\src\main\java\com\common\annotation\SysLog.java
 D:\Code\git\order\src\main\java\com\modules\sys\controller\SysConfigController.java
 D:\Code\git\order\src\main\java\com\order\data\OrderUploadListener.java
 D:\Code\git\order\src\main\java\com\config\FilterConfig.java
+D:\Code\git\order\src\main\java\com\order\entity\DictTypeEntity.java
 D:\Code\git\order\src\main\java\com\modules\sys\dao\SysUserRoleDao.java
+D:\Code\git\order\src\main\java\com\order\controller\DictController.java
+D:\Code\git\order\src\main\java\com\order\entity\DictValueEntity.java
 D:\Code\git\order\src\main\java\com\modules\sys\controller\SysLoginController.java
 D:\Code\git\order\src\main\java\com\order\service\impl\OrderServiceImpl.java
 D:\Code\git\order\src\main\java\com\modules\api\controller\ApiLoginController.java
@@ -86,6 +90,7 @@ D:\Code\git\order\src\main\java\com\order\entity\ContractEntity.java
 D:\Code\git\order\src\main\java\com\order\entity\RoleMenuEntity.java
 D:\Code\git\order\src\main\java\com\order\controller\AreaController.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysRoleService.java
+D:\Code\git\order\src\main\java\com\order\service\impl\DictServiceImpl.java
 D:\Code\git\order\src\main\java\com\order\repository\UserRepository.java
 D:\Code\git\order\src\main\java\com\order\service\impl\LoginServiceImpl.java
 D:\Code\git\order\src\main\java\com\modules\sys\entity\SysUserTokenEntity.java
@@ -117,6 +122,7 @@ D:\Code\git\order\src\main\java\com\modules\sys\service\SysUserRoleService.java
 D:\Code\git\order\src\main\java\com\common\utils\WXRequestParams.java
 D:\Code\git\order\src\main\java\com\common\utils\PageParams.java
 D:\Code\git\order\src\main\java\com\order\data\OrderData.java
+D:\Code\git\order\src\main\java\com\order\service\DictService.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\SysLogService.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\impl\SysConfigServiceImpl.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\impl\SysRoleMenuServiceImpl.java
@@ -180,5 +186,7 @@ D:\Code\git\order\src\main\java\com\order\service\impl\AreaServiceImpl.java
 D:\Code\git\order\src\main\java\com\modules\sys\service\impl\ShiroServiceImpl.java
 D:\Code\git\order\src\main\java\com\order\repository\ContractRepository.java
 D:\Code\git\order\src\main\java\com\common\xss\XssHttpServletRequestWrapper.java
+D:\Code\git\order\src\main\java\com\order\repository\DictRepository.java
 D:\Code\git\order\src\main\java\com\modules\api\resolver\LoginUserHandlerMethodArgumentResolver.java
+D:\Code\git\order\src\main\java\com\order\repository\DictTypeRepository.java
 D:\Code\git\order\src\main\java\com\modules\api\annotation\AuthIgnore.java

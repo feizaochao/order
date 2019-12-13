@@ -44,11 +44,15 @@ public class OrderEntity extends BaseEntity {
 	@Column(nullable = true)
     @ApiModelProperty(value = "业态", dataType = "int")
 	private int status;
+
+	@Transient
+    @ApiModelProperty(value = "业态名称", dataType = "string")
+	private String statusName;
 	
 	/*是否使用我司网络*/
 	@Column(nullable = true)
-    @ApiModelProperty(value = "是否使用我司网络", dataType = "int")
-	private int isUseNetwork;
+    @ApiModelProperty(value = "是否使用我司网络", dataType = "string")
+	private String isUseNetwork;
 	
 	/*区划号*/
 	@Column(nullable = true)
@@ -179,11 +183,19 @@ public class OrderEntity extends BaseEntity {
         this.status = status;
     }
 
-    public int getIsUseNetwork() {
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public String getIsUseNetwork() {
         return isUseNetwork;
     }
 
-    public void setIsUseNetwork(int isUseNetwork) {
+    public void setIsUseNetwork(String isUseNetwork) {
         this.isUseNetwork = isUseNetwork;
     }
 

@@ -10,6 +10,7 @@ com\order\data\ContractUploadListener.class
 com\modules\sys\service\SysRoleMenuService.class
 com\order\data\OrderUploadListener.class
 com\modules\api\entity\TokenEntity.class
+com\order\repository\DictRepository.class
 com\order\service\impl\CustomerServiceImpl$1.class
 com\modules\api\config\WebMvcConfig.class
 com\common\validator\group\AddGroup.class
@@ -64,6 +65,7 @@ com\common\utils\SpringContextUtils.class
 com\common\xss\XssHttpServletRequestWrapper.class
 com\common\xss\HTMLFilter.class
 com\datasources\aspect\DataSourceAspect.class
+com\order\data\DictType.class
 com\modules\sys\entity\SysUserEntity.class
 com\modules\sys\service\SysRoleService.class
 com\common\aspect\DataFilterAspect.class
@@ -84,12 +86,14 @@ com\modules\sys\service\SysLogService.class
 com\order\repository\OrderRepository.class
 com\modules\oss\service\SysOssService.class
 com\common\aspect\RedisAspect.class
+com\order\service\impl\DictServiceImpl.class
 com\order\data\OrderData.class
 com\order\entity\RoleEntity.class
 com\order\service\impl\OrderServiceImpl$1.class
 com\datasources\DataSourceTestService.class
 com\modules\sys\service\SysUserService.class
 com\modules\api\controller\ApiLoginController.class
+com\order\service\impl\DictServiceImpl$1.class
 com\order\service\MenuService.class
 com\modules\sys\service\SysUserTokenService.class
 com\modules\sys\dao\SysUserDao.class
@@ -100,6 +104,7 @@ com\order\service\LoginService.class
 com\modules\sys\service\impl\SysDeptServiceImpl.class
 com\modules\sys\service\SysMenuService.class
 com\common\utils\Constant.class
+com\order\controller\DictController.class
 com\datasources\DynamicDataSource.class
 com\config\FilterConfig.class
 com\modules\sys\controller\SysConfigController.class
@@ -138,10 +143,12 @@ com\modules\sys\entity\SysUserRoleEntity.class
 com\common\xss\XssFilter.class
 com\modules\oss\dao\SysOssDao.class
 com\modules\oss\service\impl\SysOssServiceImpl.class
+com\order\repository\DictTypeRepository.class
 com\modules\sys\service\impl\SysUserTokenServiceImpl.class
 com\modules\sys\dao\SysLogDao.class
 com\order\service\ContractService.class
 com\order\controller\UserController.class
+com\order\entity\DictTypeEntity.class
 com\modules\api\service\TokenService.class
 com\common\exception\RRException.class
 com\modules\sys\entity\SysRoleDeptEntity.class
@@ -170,6 +177,7 @@ com\modules\sys\service\impl\ShiroServiceImpl.class
 com\modules\sys\service\SysDeptService.class
 com\common\utils\PageUtils2.class
 com\order\service\OrderService.class
+com\order\entity\DictValueEntity.class
 com\modules\api\resolver\LoginUserHandlerMethodArgumentResolver.class
 com\common\utils\RedisKeys.class
 com\config\KaptchaConfig.class
@@ -179,6 +187,7 @@ com\order\entity\OrderInvoiceEntity.class
 com\modules\oss\cloud\CloudStorageConfig.class
 com\modules\sys\entity\SysMenuEntity.class
 com\modules\sys\dao\SysUserRoleDao.class
+com\order\service\DictService.class
 com\modules\sys\entity\SysConfigEntity.class
 com\order\entity\ContractEntity.class
 com\modules\sys\dao\SysConfigDao.class

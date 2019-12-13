@@ -65,8 +65,13 @@ public class CustomerEntity extends BaseEntity {
 	/*存留信息*/
 	@Column
 	@ApiModelProperty(value = "客户存留信息", dataType = "int")
-	@ExcelProperty("客户存留信息")
+	@ExcelIgnore
 	private int persist;
+
+	@Transient
+	@ApiModelProperty(value = "客户存留信息名称", dataType = "string")
+	@ExcelProperty("客户存留信息")
+	private String persistName;
 	
 	/*证件地址*/
 	@Column
@@ -145,6 +150,14 @@ public class CustomerEntity extends BaseEntity {
 
 	public void setPersist(int persist) {
 		this.persist = persist;
+	}
+
+	public String getPersistName() {
+		return persistName;
+	}
+
+	public void setPersistName(String persistName) {
+		this.persistName = persistName;
 	}
 
 	public String getLicenseAddress() {

@@ -3,6 +3,8 @@ package com.order.data;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.order.entity.CustomerEntity;
+import com.order.entity.DictValueEntity;
+import com.order.repository.DictRepository;
 import com.order.service.CustomerService;
 import com.qiniu.util.Json;
 import org.slf4j.Logger;
@@ -20,13 +22,24 @@ public class CustomerUploadListener extends AnalysisEventListener<CustomerEntity
 
     private CustomerService customerService;
 
+    private DictRepository dictRepository;
+
     public CustomerUploadListener(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    public CustomerUploadListener(CustomerService customerService, DictRepository dictRepository) {
+        this.customerService = customerService;
+        this.dictRepository = dictRepository;
     }
 
     @Override
     public void invoke(CustomerEntity customerEntity, AnalysisContext analysisContext) {
         LOGGER.info("解析到一条数据：{}", Json.encode(customerEntity));
+        DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndName(DictType.PERSIST, customerEntity.getPersistName());
+        if(null != dictValueEntity) {
+            customerEntity.setPersist(dictValueEntity.getValue());
+        }
         customerService.addCustomer(customerEntity);
     }
 

@@ -14,4 +14,8 @@ import java.util.List;
  */
 public interface DictRepository extends JpaRepository<DictValueEntity, Long>, JpaSpecificationExecutor<DictValueEntity> {
     List<DictValueEntity> findAllByDictTypeId(Long dictTypeId);
+
+    DictValueEntity findByDictTypeIdAndValue(Long dictTypeId, int value);
+
+    DictValueEntity findByDictTypeIdAndName(Long dictTypeId, String name);
 }

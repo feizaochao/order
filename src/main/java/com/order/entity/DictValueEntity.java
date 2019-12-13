@@ -23,7 +23,7 @@ public class DictValueEntity extends BaseEntity {
     private String name;
 
     @Column
-    private String value;
+    private int value;
 
     @Transient
     private String dictTypeName;
@@ -52,11 +52,11 @@ public class DictValueEntity extends BaseEntity {
         this.name = name;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 

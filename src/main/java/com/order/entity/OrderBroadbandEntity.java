@@ -29,8 +29,8 @@ public class OrderBroadbandEntity extends BaseEntity {
 
     /*宽带类型*/
     @Column
-    @ApiModelProperty(value = "宽带类型", dataType = "string")
-    private String type;
+    @ApiModelProperty(value = "宽带类型", dataType = "int")
+    private int type;
 
     /*宽带资费*/
     @Column
@@ -68,11 +68,11 @@ public class OrderBroadbandEntity extends BaseEntity {
         this.operator = operator;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

@@ -112,7 +112,7 @@ public class ContractEntity extends BaseEntity {
 	@Column
 	@ApiModelProperty(value = "电费资料提交情况", dataType = "int")
 	@ExcelProperty("电费资料提交情况")
-	private int electricitySubmitType;
+	private String electricitySubmitType;
 	
 	/*已交费用给物业*/
 	@Column
@@ -222,11 +222,11 @@ public class ContractEntity extends BaseEntity {
 		this.electricityCharge = electricityCharge;
 	}
 
-	public int getElectricitySubmitType() {
+	public String getElectricitySubmitType() {
 		return electricitySubmitType;
 	}
 
-	public void setElectricitySubmitType(int electricitySubmitType) {
+	public void setElectricitySubmitType(String electricitySubmitType) {
 		this.electricitySubmitType = electricitySubmitType;
 	}
 

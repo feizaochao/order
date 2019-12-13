@@ -3,6 +3,8 @@ package com.order.data;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.order.entity.*;
+import com.order.repository.AreaRepository;
+import com.order.repository.DictRepository;
 import com.order.service.OrderService;
 import com.qiniu.util.Json;
 import org.slf4j.Logger;
@@ -22,8 +24,23 @@ public class OrderUploadListener extends AnalysisEventListener<OrderData> {
 
     private OrderService orderService;
 
+    private DictRepository dictRepository;
+
+    private AreaRepository areaRepository;
+
     public OrderUploadListener(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    public OrderUploadListener(OrderService orderService, DictRepository dictRepository) {
+        this.orderService = orderService;
+        this.dictRepository = dictRepository;
+    }
+
+    public OrderUploadListener(OrderService orderService, DictRepository dictRepository, AreaRepository areaRepository) {
+        this.orderService = orderService;
+        this.dictRepository = dictRepository;
+        this.areaRepository = areaRepository;
     }
 
     @Override
@@ -34,8 +51,11 @@ public class OrderUploadListener extends AnalysisEventListener<OrderData> {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrderNo(orderData.getOrderNo());
         orderEntity.setOwnerProject(orderData.getOwnerProject());
-        // orderEntity.setStatus(orderData.getStatus()); // 需要枚举转换
-        // orderEntity.setIsUseNetwork(orderData.getIsUseNetWork());
+        DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndName(DictType.TRADE_STATUS, orderData.getStatus());
+        if(null != dictValueEntity) {
+            orderEntity.setStatus(dictValueEntity.getValue());
+        }
+        orderEntity.setIsUseNetwork(orderData.getIsUseNetWork());
         orderEntity.setAreaNumber(orderData.getAreaNumber());
 
         CustomerEntity customerEntity = new CustomerEntity();
@@ -44,10 +64,16 @@ public class OrderUploadListener extends AnalysisEventListener<OrderData> {
         customerEntity.setMallNo(orderData.getMailNo());
         customerEntity.setLicenseNo(orderData.getLicenseNo());
         customerEntity.setLicenseAddress(orderData.getLicenseAddress());
-        // customerEntity.setPersist(orderData.getPersist());
+        dictValueEntity = dictRepository.findByDictTypeIdAndName(DictType.PERSIST, orderData.getPersist());
+        if(null != dictValueEntity) {
+            customerEntity.setPersist(dictValueEntity.getValue());
+        }
         customerEntity.setAddress(orderData.getAddress());
         customerEntity.setRemarks(orderData.getRemarks());
-        customerEntity.setAreaName(orderData.getAreaName());
+        AreaEntity areaEntity = areaRepository.findByAreaName(orderData.getAreaName());
+        if(areaEntity != null) {
+            customerEntity.setAreaId(areaEntity.getId());
+        }
         orderEntity.setCustomer(customerEntity);
 
         ContractEntity contractEntity = new ContractEntity();
@@ -62,14 +88,17 @@ public class OrderUploadListener extends AnalysisEventListener<OrderData> {
         contractEntity.setStartTime(orderData.getStartTime());
         contractEntity.setEndTime(orderData.getEndTime());
         contractEntity.setElectricityCharge(orderData.getElectricityCharge());
-//        contractEntity.setElectricitySubmitType(orderData.getElectricitySubmitType());
+        contractEntity.setElectricitySubmitType(orderData.getElectricitySubmitType());
         contractEntity.setElectricityPaid(orderData.getElectricityPaid());
         contractEntity.setPaidTime(orderData.getPaidTime());
         orderEntity.setContract(contractEntity);
 
         OrderBroadbandEntity broadbandEntity = new OrderBroadbandEntity();
         broadbandEntity.setOperator(orderData.getOperator());
-        broadbandEntity.setType(orderData.getType());
+        dictValueEntity = dictRepository.findByDictTypeIdAndName(DictType.BROADBAND_TYPE, orderData.getType());
+        if(null != dictValueEntity) {
+            broadbandEntity.setType(dictValueEntity.getValue());
+        }
         broadbandEntity.setPrice(orderData.getPrice());
         broadbandEntity.setPhone(orderData.getPhone());
         broadbandEntity.setPhoneNum(orderData.getPhoneNum());
@@ -83,8 +112,11 @@ public class OrderUploadListener extends AnalysisEventListener<OrderData> {
         orderEntity.setCharge(chargeEntity);
 
         OrderInvoiceEntity invoiceEntity = new OrderInvoiceEntity();
-//        invoiceEntity.setIsInvoice(orderData.getIsInvoice());
-//        invoiceEntity.setType(orderData.getInvoiceType());
+        invoiceEntity.setIsInvoice(orderData.getIsInvoice());
+        dictValueEntity = dictRepository.findByDictTypeIdAndName(DictType.INVOICE_TYPE, orderData.getInvoiceType());
+        if(null != dictValueEntity) {
+            invoiceEntity.setType(dictValueEntity.getValue());
+        }
         invoiceEntity.setInvoiceDate(orderData.getInvoiceDate());
         invoiceEntity.setInvoiceNum(orderData.getInvoiceNum());
         orderEntity.setInvoice(invoiceEntity);
@@ -98,7 +130,10 @@ public class OrderUploadListener extends AnalysisEventListener<OrderData> {
 
         OrderOperatorEntity operatorEntity = new OrderOperatorEntity();
         operatorEntity.setProductNum(orderData.getProductNum());
-//        operatorEntity.setAccountStatus(orderData.getAccountStatus());
+        dictValueEntity = dictRepository.findByDictTypeIdAndName(DictType.OPERATOR_ACCOUNT_TYPE, orderData.getAccountStatus());
+        if(null != dictValueEntity) {
+            operatorEntity.setAccountStatus(dictValueEntity.getValue());
+        }
         operatorEntity.setInternetAccount(orderData.getInternetAccount());
         operatorEntity.setBroadband(orderData.getBroadband());
         operatorEntity.setPhone(orderData.getOperatorPhone());

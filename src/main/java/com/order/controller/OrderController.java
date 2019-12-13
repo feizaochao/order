@@ -11,6 +11,8 @@ import com.common.utils.*;
 import com.order.data.OrderData;
 import com.order.data.OrderUploadListener;
 import com.order.entity.OrderEntity;
+import com.order.repository.AreaRepository;
+import com.order.repository.DictRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +37,10 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private DictRepository dictRepository;
+	@Autowired
+	private AreaRepository areaRepository;
 	
 	@PostMapping(value = "/add")
 	@ApiOperation("订单新增")
@@ -79,7 +85,7 @@ public class OrderController {
 
 	@PostMapping("/upload")
 	public ResultUtils upload(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), OrderData.class, new OrderUploadListener(orderService)).sheet().doRead();
+        EasyExcel.read(file.getInputStream(), OrderData.class, new OrderUploadListener(orderService, dictRepository, areaRepository)).sheet().doRead();
         return ResultUtils.ok();
     }
 }
