@@ -21,8 +21,8 @@ import com.order.service.LoginService;
 @RestController
 public class LoginController {
 
-    private final static String APPID = "wx0a5e19ff41bf3930";
-    private final static String APPSECRET = "";
+    private final static String APP_ID = "wx0a5e19ff41bf3930";
+    private final static String APP_SECRET = "c6430309d7c60ebe3714fd6b14c39ea3";
 
 	@Autowired
 	private LoginService loginService;
@@ -37,11 +37,11 @@ public class LoginController {
     @PostMapping(value = "/wxLogin")
 	public ResultUtils weChatLogin(@RequestBody WXRequestParams params) {
         String url = "https://api.weixin.qq.com/sns/jscode2session";
-        String appId = "wx0a5e19ff41bf393";
-        String appSecret = "c6430309d7c60ebe3714fd6b14c39ea3";
+//        String appId = "wx0a5e19ff41bf393";
+//        String appSecret = "c6430309d7c60ebe3714fd6b14c39ea3";
         String code = params.getCode();
         String grantType = "authorization_code";
-        String param = appId + "&" + appSecret + "&" + code + "&" + grantType;
+        String param = APP_ID + "&" + APP_SECRET + "&" + code + "&" + grantType;
         String result = HttpClient.doGet(url, param);
         return ResultUtils.success("", result);
     }

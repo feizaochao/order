@@ -27,5 +27,5 @@ public interface CustomerService {
 
 	R queryOne(Query query);
 
-	List<CustomerEntity> exportAllData();
+	List<CustomerEntity> exportAllData(List<Long> ids);
 }

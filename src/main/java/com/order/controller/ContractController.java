@@ -2,6 +2,7 @@ package com.order.controller;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
@@ -65,12 +66,12 @@ public class ContractController {
 	}
 
 	@GetMapping("/exportAll")
-	public void exportAllData(HttpServletResponse response) throws IOException {
+	public void exportAllData(@RequestParam("ids") List<Long> ids, HttpServletResponse response) throws IOException {
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding("utf-8");
 		String fileName = URLEncoder.encode("合同", "UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), ContractEntity.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(contractService.exportAllData());
+		EasyExcel.write(response.getOutputStream(), ContractEntity.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(contractService.exportAllData(ids));
 	}
 
 	@PostMapping("/upload")

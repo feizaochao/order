@@ -105,8 +105,14 @@ public class ContractServiceImpl implements ContractService {
 	}
 
 	@Override
-	public List<ContractEntity> exportAllData() {
-		return contractRepository.findAll();
+	public List<ContractEntity> exportAllData(List<Long> ids) {
+		List<ContractEntity> results = null;
+		if(null != ids && ids.size() != 0) {
+			results = contractRepository.findAll(ids);
+		} else {
+			results = contractRepository.findAll();
+		}
+		return results;
 	}
 
 	private void buildContract(ContractEntity contract, ContractEntity params) {

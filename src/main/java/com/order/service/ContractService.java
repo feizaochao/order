@@ -27,5 +27,5 @@ public interface ContractService {
 
 	ResultUtils queryOne(Long id);
 
-	List<ContractEntity> exportAllData();
+	List<ContractEntity> exportAllData(List<Long> ids);
 }

@@ -198,8 +198,13 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<CustomerEntity> exportAllData() {
-		List<CustomerEntity> results = customerRepository.findAll();
+	public List<CustomerEntity> exportAllData(List<Long> ids) {
+		List<CustomerEntity> results = null;
+		if(null != ids && ids.size() != 0) {
+			results = customerRepository.findAll(ids);
+		} else {
+			results = customerRepository.findAll();
+		}
 		for(CustomerEntity customer : results) {
 			if(null != customer.getAreaId()) {
 				AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());

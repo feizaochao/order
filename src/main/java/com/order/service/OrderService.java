@@ -28,5 +28,5 @@ public interface OrderService {
 
 	ResultUtils queryOne(Long id);
 
-	List<OrderData> exportAllData();
+	List<OrderData> exportAllData(List<Long> ids);
 }

@@ -2,7 +2,9 @@ package com.order.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.excel.EasyExcel;
@@ -75,12 +77,12 @@ public class OrderController {
 	}
 
 	@GetMapping("/exportAll")
-	public void exportAll(HttpServletResponse response) throws IOException {
+	public void exportAll(@RequestParam("ids") List<Long> ids, HttpServletResponse response) throws IOException {
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding("utf-8");
 		String fileName = URLEncoder.encode("订单", "UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), OrderData.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(orderService.exportAllData());
+		EasyExcel.write(response.getOutputStream(), OrderData.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(orderService.exportAllData(ids));
 	}
 
 	@PostMapping("/upload")

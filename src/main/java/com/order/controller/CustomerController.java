@@ -2,6 +2,7 @@ package com.order.controller;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.excel.EasyExcel;
@@ -69,12 +70,12 @@ public class CustomerController {
 	}
 
 	@GetMapping("/exportAll")
-	public void exportAllData(HttpServletResponse response) throws IOException {
+	public void exportAllData(@RequestParam("ids") List<Long> ids, HttpServletResponse response) throws IOException {
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding("utf-8");
 		String fileName = URLEncoder.encode("客户", "UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), CustomerEntity.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(customerService.exportAllData());
+		EasyExcel.write(response.getOutputStream(), CustomerEntity.class).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(customerService.exportAllData(ids));
 	}
 
 	@PostMapping("/upload")

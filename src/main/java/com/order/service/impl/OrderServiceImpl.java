@@ -330,8 +330,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderData> exportAllData() {
-		List<OrderEntity> orders = orderRepository.findAll();
+	public List<OrderData> exportAllData(List<Long> ids) {
+		List<OrderEntity> orders = null;
+		if(null != ids && ids.size() != 0) {
+			orders = orderRepository.findAll(ids);
+		} else {
+			orders = orderRepository.findAll();
+		}
 		return buildExportData(orders);
 	}
 
