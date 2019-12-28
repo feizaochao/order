@@ -35,8 +35,14 @@
 	</properties>
 
 	<dependencies>
+		<!-- 集成bouncycastle加密方式 -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.64</version>
+		</dependency>
 
-		<!-- 继承lombok -->
+		<!-- 集成lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

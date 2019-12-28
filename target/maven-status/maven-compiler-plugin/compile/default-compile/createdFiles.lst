@@ -202,3 +202,4 @@ com\order\entity\OrderEntity.class
 com\modules\oss\entity\SysOssEntity.class
 com\order\data\CustomerUploadListener.class
 com\order\repository\RoleMenuRepository.class
+com\order\utils\AesCbcUtil.class
