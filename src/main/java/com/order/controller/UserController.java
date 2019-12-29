@@ -53,4 +53,10 @@ public class UserController {
 	public ResultUtils deleteUser(Long userId) {
 		return userService.deleteUser(userId);
 	}
+
+	@ApiOperation("更改密码")
+	@PostMapping(value = "/edit_password")
+	public ResultUtils editPassword(String name, String oldPassword, String newPassword) {
+		return userService.editPassword(name, oldPassword, newPassword);
+	}
 }

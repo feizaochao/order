@@ -20,4 +20,6 @@ public interface UserService {
 	ResultUtils deleteUser(Long id);
 	
 	PageUtils2<UserEntity> queryList(Query query);
+
+	ResultUtils editPassword(String name, String oldPassword, String newPassword);
 }

@@ -39,7 +39,7 @@ public class LoginController {
 	@ApiOperation("登录")
 	@PostMapping(value = "/login")
 	public ResultUtils login(String username, String password) {
-		return loginService.login(username, password);
+        return loginService.login(username, password);
 	}
 
 	@ApiOperation("微信登录")
@@ -62,7 +62,7 @@ public class LoginController {
             userInfo.setProvince(wxUserInfoJson.getString("province"));
             userInfo.setCountry(wxUserInfoJson.getString("country"));
             userInfo.setAvatarUrl(wxUserInfoJson.getString("avatarUrl"));
-            userInfo.setUnionId(wxUserInfoJson.getString("unionId"));
+//            userInfo.setUnionId(wxUserInfoJson.getString("unionId"));
         }
         return ResultUtils.success("", userInfo);
     }

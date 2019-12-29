@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 */
 @Api(tags = "订单接口")
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/order_mapping")
 public class OrderController {
 
 	@Autowired
