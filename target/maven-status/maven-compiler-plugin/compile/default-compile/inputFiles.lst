@@ -112,6 +112,7 @@ D:\Code\git\order\src\main\java\com\common\aspect\RedisAspect.java
 D:\Code\git\order\src\main\java\com\modules\sys\dao\SysLogDao.java
 D:\Code\git\order\src\main\java\com\common\utils\MathUtils.java
 D:\Code\git\order\src\main\java\com\datasources\DataSourceNames.java
+D:\Code\git\order\src\main\java\com\common\utils\WXUserInfo.java
 D:\Code\git\order\src\main\java\com\common\xss\HTMLFilter.java
 D:\Code\git\order\src\main\java\com\datasources\annotation\DataSource.java
 D:\Code\git\order\src\main\java\com\order\entity\OrderInvoiceEntity.java

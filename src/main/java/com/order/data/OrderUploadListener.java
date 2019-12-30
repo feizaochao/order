@@ -72,7 +72,11 @@ public class OrderUploadListener extends AnalysisEventListener<OrderData> {
         customerEntity.setRemarks(orderData.getRemarks());
         AreaEntity areaEntity = areaRepository.findByAreaName(orderData.getAreaName());
         if(areaEntity != null) {
+            orderEntity.setAreaId(areaEntity.getId());
+            orderEntity.setAreaName(areaEntity.getAreaName());
+
             customerEntity.setAreaId(areaEntity.getId());
+            customerEntity.setAreaName(areaEntity.getAreaName());
         }
         orderEntity.setCustomer(customerEntity);
 

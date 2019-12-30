@@ -132,6 +132,7 @@ com\modules\oss\controller\SysOssController.class
 com\common\utils\Constant$CloudService.class
 com\order\service\UserService.class
 com\modules\sys\dao\SysUserTokenDao.class
+com\common\utils\WXUserInfo.class
 com\modules\sys\oauth2\TokenGenerator.class
 com\common\xss\XssHttpServletRequestWrapper$1.class
 com\order\service\impl\RoleServiceImpl.class

@@ -68,7 +68,7 @@ public class CustomerEntity extends BaseEntity {
 	@ExcelIgnore
 	private int persist;
 
-	@Transient
+	@Column
 	@ApiModelProperty(value = "客户存留信息名称", dataType = "string")
 	@ExcelProperty("客户存留信息")
 	private String persistName;
@@ -91,7 +91,7 @@ public class CustomerEntity extends BaseEntity {
 	@ExcelProperty("备注")
 	private String remarks;
 
-	@Transient
+	@Column
 	@ApiModelProperty(value = "片区名", dataType = "string")
 	@ExcelProperty("片区名")
 	private String areaName;

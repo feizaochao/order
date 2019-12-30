@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import com.common.utils.ResultUtils;
+import com.order.data.DictType;
 import com.order.entity.*;
 import com.order.repository.DictRepository;
 import com.order.repository.OrderRepository;
@@ -125,10 +126,20 @@ public class CustomerServiceImpl implements CustomerService {
 			public Predicate toPredicate(Root<CustomerEntity> root, CriteriaQuery<?> qy, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<>();
 				String fieldName = (String) query.get("fieldName");
+				String keyword = (String) query.get("keyword");
 				if(null != fieldName && !"".equals(fieldName)) {
-				    Predicate predicate = cb.like(root.<String>get(fieldName), "%" + query.get("keyword") + "%");
+				    Predicate predicate = cb.like(root.<String>get(fieldName), "%" + keyword + "%");
 				    predicates.add(predicate);
-                }
+                } else if(null != keyword && !"".equals(keyword)) {
+					Predicate namePredicate = cb.like(root.<String>get("name"), "%" + keyword + "%");
+					predicates.add(namePredicate);
+					Predicate areaPredicate = cb.like(root.<String>get("areaName"), "%" + keyword + "%");
+					predicates.add(areaPredicate);
+					Predicate persistPredicate = cb.like(root.<String>get("persistName"), "%" + keyword + "%");
+					predicates.add(persistPredicate);
+
+					return cb.or(predicates.toArray(new Predicate[0]));
+				}
 				return cb.and(predicates.toArray(new Predicate[0]));
 			}
 		};
@@ -136,22 +147,6 @@ public class CustomerServiceImpl implements CustomerService {
 		orders.add(new Order(Direction.DESC, "createTime"));
 		Pageable pageable = new PageRequest(query.getPage() - 1, query.getLimit(), new Sort(orders));
 		Page<CustomerEntity> page = customerRepository.findAll(specification, pageable);
-
-		StringBuilder sql = new StringBuilder();
-		sql.append("select areaName from AreaEntity where id = :areaId");
-		List<CustomerEntity> list = page.getContent();
-		for(CustomerEntity customer : list) {
-			if(null != customer.getAreaId()) {
-				javax.persistence.Query qy = em.createQuery(sql.toString());
-				qy.setParameter("areaId", customer.getAreaId());
-				String areaName = (String) qy.getSingleResult();
-				customer.setAreaName(areaName);
-			}
-			DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndValue(2l, customer.getPersist());
-			if(null != dictValueEntity) {
-				customer.setPersistName(dictValueEntity.getName());
-			}
-		}
 		PageUtils pageUtils = new PageUtils(page.getContent(), Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		return pageUtils;
 	}
@@ -188,9 +183,6 @@ public class CustomerServiceImpl implements CustomerService {
 			ContractEntity contract = em.find(ContractEntity.class, order.getContractId());
 			order.setCustomer(customer);
 			order.setContract(contract);
-			AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
-			order.setAreaName(area.getAreaName());
-
 		}
 		PageUtils pageUtils = new PageUtils(list, Long.valueOf(page.getTotalElements()).intValue(), query.getLimit(), query.getPage());
 		r.put("orderData", pageUtils);
@@ -205,26 +197,24 @@ public class CustomerServiceImpl implements CustomerService {
 		} else {
 			results = customerRepository.findAll();
 		}
-		for(CustomerEntity customer : results) {
-			if(null != customer.getAreaId()) {
-				AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
-				customer.setAreaName(area.getAreaName());
-			}
-			DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndValue(2l, customer.getPersist());
-			if(null != dictValueEntity) {
-				customer.setPersistName(dictValueEntity.getName());
-			}
-		}
 		return results;
 	}
 
 	private void buildCustomer(CustomerEntity customer, CustomerEntity params) {
 		customer.setName(params.getName());
-		customer.setAreaId(params.getAreaId());
+		if(null != params.getAreaId()) {
+			AreaEntity area = em.find(AreaEntity.class, params.getAreaId());
+			customer.setAreaId(area.getId());
+			customer.setAreaName(area.getAreaName());
+		}
 		customer.setContact(params.getContact());
 		customer.setMallNo(params.getMallNo());
 		customer.setLicenseNo(params.getLicenseNo());
-		customer.setPersist(params.getPersist());
+		DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.PERSIST, params.getPersist());
+		if(null != dictValueEntity) {
+			customer.setPersist(dictValueEntity.getValue());
+			customer.setPersistName(dictValueEntity.getName());
+		}
 		customer.setLicenseAddress(params.getLicenseAddress());
 		customer.setAddress(params.getAddress());
 		customer.setRemarks(params.getRemarks());

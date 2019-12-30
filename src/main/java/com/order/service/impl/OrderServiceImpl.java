@@ -250,9 +250,18 @@ public class OrderServiceImpl implements OrderService {
 			public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> qy, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<>();
 				String fieldName = (String) query.get("fieldName");
+				String keyword = (String) query.get("keyword");
 				if(null != fieldName && !"".equals(fieldName)) {
-					Predicate predicate = cb.like(root.<String>get(fieldName), "%" + query.get("keyword") + "%");
+					Predicate predicate = cb.like(root.<String>get(fieldName), "%" + keyword + "%");
 					predicates.add(predicate);
+				} else if(null != keyword && !"".equals(keyword)) {
+					Predicate noPredicate = cb.like(root.<String>get("orderNo"), "%" +keyword + "%");
+					predicates.add(noPredicate);
+					Predicate cNamePredicate = cb.like(root.<String>get("customerName"), "%" + keyword + "%");
+					predicates.add(cNamePredicate);
+					Predicate areaNamePredicate = cb.like(root.<String>get("areaName"), "%" + keyword + "%");
+					predicates.add(areaNamePredicate);
+					return cb.or(predicates.toArray(new Predicate[0]));
 				}
 				return cb.and(predicates.toArray(new Predicate[0]));
 			}
@@ -268,10 +277,6 @@ public class OrderServiceImpl implements OrderService {
 			ContractEntity contract = em.find(ContractEntity.class, order.getContractId());
 			order.setCustomer(customer);
 			order.setContract(contract);
-			if(null != customer.getAreaId()) {
-				AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
-				order.setAreaName(area.getAreaName());
-			}
 			DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.TRADE_STATUS, order.getStatus());
 			if(null != dictValueEntity) {
 				order.setStatusName(dictValueEntity.getName());
@@ -344,7 +349,11 @@ public class OrderServiceImpl implements OrderService {
 	private void buildCustomer(CustomerEntity customer, CustomerEntity params) {
 		customer.setMallNo(params.getMallNo());
 		customer.setName(params.getName());
-		customer.setAreaId(params.getAreaId());
+		if(null != params.getAreaId()) {
+			AreaEntity area = em.find(AreaEntity.class, params.getAreaId());
+			customer.setAreaId(area.getId());
+			customer.setAreaName(area.getAreaName());
+		}
 		customer.setPersist(params.getPersist());
 		customer.setAddress(params.getAddress());
 		customer.setContact(params.getContact());
@@ -420,7 +429,11 @@ public class OrderServiceImpl implements OrderService {
 		order.setIsUseNetwork(params.getIsUseNetwork());
         order.setCustomerName(customer.getName());
         order.setContractAmount(contract.getContractAmount());
-        order.setAreaId(customer.getAreaId());
+        if(null != customer.getAreaId()) {
+        	AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
+        	order.setAreaId(area.getId());
+        	order.setAreaName(area.getAreaName());
+		}
         order.setAddress(customer.getAddress());
 		order.setCustomerId(customer.getId());
 		order.setContractId(contract.getId());
@@ -451,10 +464,6 @@ public class OrderServiceImpl implements OrderService {
 				orderData.setLicenseAddress(customer.getLicenseAddress());
 				orderData.setAddress(customer.getAddress());
 				orderData.setRemarks(customer.getRemarks());
-				if(null != customer.getAreaId()) {
-					area = em.find(AreaEntity.class, customer.getAreaId());
-					orderData.setAreaName(customer.getAreaName());
-				}
 			}
 
 			ContractEntity contract = null;
@@ -540,6 +549,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 			orderData.setIsUseNetWork(order.getIsUseNetwork());
 			orderData.setAreaNumber(order.getAreaNumber());
+			orderData.setAreaName(order.getAreaName());
 			results.add(orderData);
 		}
 		return results;

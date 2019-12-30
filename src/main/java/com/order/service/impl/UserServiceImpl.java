@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResultUtils editPassword(String name, String oldPassword, String newPassword) {
 		UserEntity user = userRepository.findOneByName(name);
-		if(null != user) {
+		if(null == user) {
 			return ResultUtils.error(201, "用户不存在");
 		}
 		if(!user.getPassword().equals(oldPassword)) {

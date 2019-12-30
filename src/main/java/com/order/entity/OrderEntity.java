@@ -143,7 +143,7 @@ public class OrderEntity extends BaseEntity {
     @ApiModelProperty(value = "运营商实体", dataType = "object")
 	private OrderOperatorEntity operator;
 
-    @Transient
+    @Column
     @ApiModelProperty(value = "片区名", dataType = "string")
     private String areaName;
 

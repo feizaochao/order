@@ -39,6 +39,7 @@ public class CustomerUploadListener extends AnalysisEventListener<CustomerEntity
         DictValueEntity dictValueEntity = dictRepository.findByDictTypeIdAndName(DictType.PERSIST, customerEntity.getPersistName());
         if(null != dictValueEntity) {
             customerEntity.setPersist(dictValueEntity.getValue());
+            customerEntity.setPersistName(dictValueEntity.getName());
         }
         customerService.addCustomer(customerEntity);
     }
