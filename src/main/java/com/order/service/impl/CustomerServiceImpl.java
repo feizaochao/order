@@ -204,8 +204,10 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setName(params.getName());
 		if(null != params.getAreaId()) {
 			AreaEntity area = em.find(AreaEntity.class, params.getAreaId());
-			customer.setAreaId(area.getId());
-			customer.setAreaName(area.getAreaName());
+			if(area != null) {
+				customer.setAreaId(area.getId());
+				customer.setAreaName(area.getAreaName());
+			}
 		}
 		customer.setContact(params.getContact());
 		customer.setMallNo(params.getMallNo());

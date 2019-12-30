@@ -351,8 +351,10 @@ public class OrderServiceImpl implements OrderService {
 		customer.setName(params.getName());
 		if(null != params.getAreaId()) {
 			AreaEntity area = em.find(AreaEntity.class, params.getAreaId());
-			customer.setAreaId(area.getId());
-			customer.setAreaName(area.getAreaName());
+			if(area != null) {
+				customer.setAreaId(area.getId());
+				customer.setAreaName(area.getAreaName());
+			}
 		}
 		customer.setPersist(params.getPersist());
 		customer.setAddress(params.getAddress());
@@ -431,8 +433,10 @@ public class OrderServiceImpl implements OrderService {
         order.setContractAmount(contract.getContractAmount());
         if(null != customer.getAreaId()) {
         	AreaEntity area = em.find(AreaEntity.class, customer.getAreaId());
-        	order.setAreaId(area.getId());
-        	order.setAreaName(area.getAreaName());
+        	if(area != null) {
+				order.setAreaId(area.getId());
+				order.setAreaName(area.getAreaName());
+			}
 		}
         order.setAddress(customer.getAddress());
 		order.setCustomerId(customer.getId());
