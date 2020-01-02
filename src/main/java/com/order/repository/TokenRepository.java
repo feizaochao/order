@@ -11,4 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
     TokenEntity findByUserId(Long userId);
+
+    TokenEntity findByToken(String token);
 }

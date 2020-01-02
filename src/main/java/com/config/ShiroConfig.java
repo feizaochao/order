@@ -72,6 +72,14 @@ public class ShiroConfig {
 //        filterMap.put("/captcha.jpg", "anon");
 //        filterMap.put("/", "anon");
 //        filterMap.put("/**", "oauth2");
+        filterMap.put("/login", "anon");
+        filterMap.put("/order_mapping/**", "oauth2");
+        filterMap.put("/customer/**", "oauth2");
+        filterMap.put("/user/**", "oauth2");
+        filterMap.put("/role/**", "oauth2");
+        filterMap.put("/menu/**", "oauth2");
+        filterMap.put("/dict/**", "oauth2");
+        filterMap.put("/area/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;

@@ -1,6 +1,8 @@
 package com.modules.sys.oauth2;
 
+import com.order.entity.TokenEntity;
 import com.order.entity.UserEntity;
+import com.order.repository.TokenRepository;
 import com.order.repository.UserRepository;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -29,6 +31,8 @@ public class OAuth2Realm extends AuthorizingRealm {
     private ShiroService shiroService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TokenRepository tokenRepository;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -59,7 +63,8 @@ public class OAuth2Realm extends AuthorizingRealm {
         String accessToken = (String) token.getPrincipal();
 
         //根据accessToken，查询用户信息
-        SysUserTokenEntity tokenEntity = shiroService.queryByToken(accessToken);
+//        SysUserTokenEntity tokenEntity = shiroService.queryByToken(accessToken);
+        TokenEntity tokenEntity = tokenRepository.findByToken(accessToken);
         //token失效
         if(tokenEntity == null || tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()){
             throw new IncorrectCredentialsException("token失效，请重新登录");

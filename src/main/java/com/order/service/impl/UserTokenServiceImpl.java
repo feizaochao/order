@@ -26,7 +26,7 @@ public class UserTokenServiceImpl implements UserTokenService {
     @Autowired
     private TokenRepository tokenRepository;
 
-    private final static int EXPIRE = 3000 * 12;
+    private final static int EXPIRE = 3600 * 12;
 
     @Override
     public Map<String, Object> createToken(Long userId) {
