@@ -31,7 +31,9 @@ com\order\service\impl\UserServiceImpl.class
 com\order\entity\AreaEntity.class
 com\order\repository\ContractRepository.class
 com\modules\api\controller\ApiRegisterController.class
+com\order\entity\TokenEntity.class
 com\modules\api\annotation\LoginUser.class
+com\order\repository\TokenRepository.class
 com\order\repository\CustomerRepository.class
 com\order\repository\UserRepository.class
 com\order\entity\MenuEntity.class
@@ -139,6 +141,7 @@ com\order\service\impl\RoleServiceImpl.class
 com\modules\sys\controller\SysDeptController.class
 com\modules\sys\service\SysRoleDeptService.class
 com\order\service\impl\ContractServiceImpl.class
+com\order\service\impl\UserTokenServiceImpl.class
 com\modules\sys\controller\SysUserController.class
 com\modules\sys\entity\SysUserRoleEntity.class
 com\common\xss\XssFilter.class
@@ -187,6 +190,7 @@ com\modules\sys\service\impl\SysRoleMenuServiceImpl.class
 com\order\entity\OrderInvoiceEntity.class
 com\modules\oss\cloud\CloudStorageConfig.class
 com\modules\sys\entity\SysMenuEntity.class
+com\order\service\UserTokenService.class
 com\modules\sys\dao\SysUserRoleDao.class
 com\order\service\DictService.class
 com\modules\sys\entity\SysConfigEntity.class

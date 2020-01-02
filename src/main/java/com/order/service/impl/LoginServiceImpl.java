@@ -1,21 +1,17 @@
 package com.order.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import com.common.utils.ResultUtils;
-import com.modules.sys.service.SysUserTokenService;
+import com.order.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.common.utils.R;
 import com.order.entity.UserEntity;
-import com.order.service.LoginService;
-import com.order.service.MenuService;
-import com.order.service.RoleService;
-import com.order.service.UserService;
 
 /**
 * @Description: TODO
@@ -34,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private MenuService menuService;
 	@Autowired
-	private SysUserTokenService tokenService;
+	private UserTokenService userTokenService;
 	
 	@Override
 	public ResultUtils login(String name, String password) {
@@ -45,14 +41,18 @@ public class LoginServiceImpl implements LoginService {
 		}
 
 		// 2.生成Token
-//		tokenService.createToken(user.getId());
+		Map<String, Object> tokenInfo = userTokenService.createToken(user.getId());
 
 		// 3.查询账号角色和权限
 		Long roleId = roleService.queryRoleByUserId(user.getId());
 		List<Map<String, Object>> menuList = menuService.queryListByRoleId(roleId);
 
+		Map<String, Object> map = new HashMap<>();
+		map.put("menuList", menuList);
+		map.put("username", user.getName());
+		map.put("tokenInfo", tokenInfo);
 
-		return ResultUtils.success("", menuList);
+		return ResultUtils.success("", map);
 	}
 
 }
