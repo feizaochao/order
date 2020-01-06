@@ -73,6 +73,7 @@ public class ShiroConfig {
 //        filterMap.put("/", "anon");
 //        filterMap.put("/**", "oauth2");
         filterMap.put("/login", "anon");
+        filterMap.put("/wxLogin", "anon");
         filterMap.put("/order_mapping/**", "oauth2");
         filterMap.put("/customer/**", "oauth2");
         filterMap.put("/user/**", "oauth2");
