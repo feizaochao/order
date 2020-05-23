@@ -220,5 +220,9 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setLicenseAddress(params.getLicenseAddress());
 		customer.setAddress(params.getAddress());
 		customer.setRemarks(params.getRemarks());
+		customer.setLicenseType(params.getLicenseType());
+		customer.setClientName(params.getClientName());
+		customer.setClientLicenseNo(params.getClientLicenseNo());
+		customer.setImagePath(params.getImagePath());
 	}
 }

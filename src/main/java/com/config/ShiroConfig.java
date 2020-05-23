@@ -74,14 +74,27 @@ public class ShiroConfig {
 //        filterMap.put("/**", "oauth2");
         filterMap.put("/login", "anon");
         filterMap.put("/wxLogin", "anon");
-        filterMap.put("/order_mapping/**", "oauth2");
-        filterMap.put("/customer/**", "oauth2");
-        filterMap.put("/contract/**", "oauth2");
+        filterMap.put("/order_mapping/add", "oauth2");
+        filterMap.put("/order_mapping/edit", "oauth2");
+        filterMap.put("/order_mapping/delete", "oauth2");
+        filterMap.put("/order_mapping/list", "oauth2");
+        filterMap.put("/order_mapping/one", "oauth2");
+        filterMap.put("/customer/add", "oauth2");
+        filterMap.put("/customer/edit", "oauth2");
+        filterMap.put("/customer/delete", "oauth2");
+        filterMap.put("/customer/list", "oauth2");
+        filterMap.put("/customer/one", "oauth2");
+        filterMap.put("/contract/add", "oauth2");
+        filterMap.put("/contract/edit", "oauth2");
+        filterMap.put("/contract/delete", "oauth2");
+        filterMap.put("/contract/list", "oauth2");
+        filterMap.put("/contract/one", "oauth2");
         filterMap.put("/user/**", "oauth2");
         filterMap.put("/role/**", "oauth2");
         filterMap.put("/menu/**", "oauth2");
         filterMap.put("/dict/**", "oauth2");
         filterMap.put("/area/**", "oauth2");
+
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;

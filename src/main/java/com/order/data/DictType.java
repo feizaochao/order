@@ -17,4 +17,8 @@ public class DictType {
     public static final Long OPERATOR_ACCOUNT_TYPE = 4L;
 
     public static final Long INVOICE_TYPE = 5L;
+
+    public static final Long CHARGE_TYPE = 6L;
+
+    public static final Long LICENSE_TYPE = 7L;
 }

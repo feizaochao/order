@@ -3,6 +3,7 @@ package com.order.entity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -39,6 +40,15 @@ public class OrderChargeEntity extends BaseEntity {
     @ApiModelProperty(value = "下期续费日期", dataType = "string")
     private String nextChargeDate;
 
+    /*收款方式*/
+    @Column
+    @ApiModelProperty(value = "收款方式", dataType = "int")
+    private int chargeType;
+
+    @Column
+    @ApiModelProperty(value = "图片路径", dataType = "string")
+    private String imagePath;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +79,21 @@ public class OrderChargeEntity extends BaseEntity {
 
     public void setNextChargeDate(String nextChargeDate) {
         this.nextChargeDate = nextChargeDate;
+    }
+
+    public int getChargeType() {
+        return chargeType;
+    }
+
+    public void setChargeType(int chargeType) {
+        this.chargeType = chargeType;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

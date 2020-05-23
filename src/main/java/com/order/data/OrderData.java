@@ -27,6 +27,9 @@ public class OrderData {
     @ExcelProperty({"订单信息", "区划号"})
     private int areaNumber;
 
+    @ExcelProperty({"订单信息", "订单创建人"})
+    private String entryUser;
+
     @ExcelProperty({"客户信息", "客户名称"})
     private String customerName;
 
@@ -38,6 +41,15 @@ public class OrderData {
 
     @ExcelProperty({"客户信息", "证件号"})
     private String licenseNo;
+
+    @ExcelProperty({"客户信息", "证件类型"})
+    private String licenseType;
+
+    @ExcelProperty({"客户信息", "委托人名称"})
+    private String clientName;
+
+    @ExcelProperty({"客户信息", "委托人证件号"})
+    private String clientLicenseNo;
 
     @ExcelProperty({"客户信息", "客户存留信息"})
     private String persist;
@@ -122,6 +134,9 @@ public class OrderData {
 
     @ExcelProperty({"收费信息", "下期续费日期"})
     private String nextChargeDate;
+
+    @ExcelProperty({"收费信息", "收费方式"})
+    private String chargeType;
 
     @ExcelProperty({"开票信息", "是否开票"})
     private String isInvoice;
@@ -637,5 +652,45 @@ public class OrderData {
 
     public void setPrimaryCharge(BigDecimal primaryCharge) {
         this.primaryCharge = primaryCharge;
+    }
+
+    public String getEntryUser() {
+        return entryUser;
+    }
+
+    public void setEntryUser(String entryUser) {
+        this.entryUser = entryUser;
+    }
+
+    public String getLicenseType() {
+        return licenseType;
+    }
+
+    public void setLicenseType(String licenseType) {
+        this.licenseType = licenseType;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getClientLicenseNo() {
+        return clientLicenseNo;
+    }
+
+    public void setClientLicenseNo(String clientLicenseNo) {
+        this.clientLicenseNo = clientLicenseNo;
+    }
+
+    public String getChargeType() {
+        return chargeType;
+    }
+
+    public void setChargeType(String chargeType) {
+        this.chargeType = chargeType;
     }
 }

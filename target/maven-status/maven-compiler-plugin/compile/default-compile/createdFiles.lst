@@ -83,6 +83,7 @@ com\datasources\DynamicDataSourceConfig.class
 com\order\entity\OrderNewBusinessEntity.class
 com\order\service\impl\AreaServiceImpl$1.class
 com\modules\api\service\impl\UserServiceImpl.class
+com\order\controller\FileController.class
 com\order\service\impl\CustomerServiceImpl$2.class
 com\modules\sys\service\SysLogService.class
 com\order\repository\OrderRepository.class

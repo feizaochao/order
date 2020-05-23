@@ -2,6 +2,7 @@ package com.order.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -146,6 +147,14 @@ public class OrderEntity extends BaseEntity {
     @Column
     @ApiModelProperty(value = "片区名", dataType = "string")
     private String areaName;
+
+    @Column
+    @ApiModelProperty(value = "订单照片路径", dataType = "string")
+    private String imagePath;
+
+    @Column
+    @ApiModelProperty(value = "录入用户", dataType = "string")
+    private String entryUser;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -365,5 +374,21 @@ public class OrderEntity extends BaseEntity {
 
     public void setAreaId(Long areaId) {
         this.areaId = areaId;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getEntryUser() {
+        return entryUser;
+    }
+
+    public void setEntryUser(String entryUser) {
+        this.entryUser = entryUser;
     }
 }

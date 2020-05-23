@@ -8,6 +8,7 @@ package com.order.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -95,6 +96,22 @@ public class CustomerEntity extends BaseEntity {
 	@ApiModelProperty(value = "片区名", dataType = "string")
 	@ExcelProperty("片区名")
 	private String areaName;
+
+	@Column
+	@ApiModelProperty(value = "客户证件类型", dataType = "int")
+	private int licenseType;
+
+	@Column
+	@ApiModelProperty(value = "委托人姓名", dataType = "string")
+	private String clientName;
+
+	@Column
+	@ApiModelProperty(value = "委托人证件号", dataType = "string")
+	private String clientLicenseNo;
+
+	@Column
+    @ApiModelProperty(value = "照片附件", dataType = "string")
+	private String imagePath;
 	
 	public Long getId() {
 		return id;
@@ -191,4 +208,36 @@ public class CustomerEntity extends BaseEntity {
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
 	}
+
+	public int getLicenseType() {
+		return licenseType;
+	}
+
+	public void setLicenseType(int licenseType) {
+		this.licenseType = licenseType;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
+
+	public String getClientLicenseNo() {
+		return clientLicenseNo;
+	}
+
+	public void setClientLicenseNo(String clientLicenseNo) {
+		this.clientLicenseNo = clientLicenseNo;
+	}
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }

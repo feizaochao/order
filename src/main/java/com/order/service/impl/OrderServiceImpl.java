@@ -387,6 +387,8 @@ public class OrderServiceImpl implements OrderService {
 		charge.setChargeAmount(params.getChargeAmount());
 		charge.setChargeDate(params.getChargeDate());
 		charge.setNextChargeDate(params.getNextChargeDate());
+		charge.setChargeType(params.getChargeType());
+		charge.setImagePath(params.getImagePath());
 	}
 
 	/*组装开票信息*/
@@ -446,6 +448,8 @@ public class OrderServiceImpl implements OrderService {
 		order.setInvoiceId(invoiceEntity.getId());
 		order.setOperatorId(operatorEntity.getId());
 		order.setNewBusinessId(newBusinessEntity.getId());
+		order.setImagePath(params.getImagePath());
+		order.setEntryUser(params.getEntryUser());
 	}
 
 	private List<OrderData> buildExportData(List<OrderEntity> orders) {
@@ -457,93 +461,117 @@ public class OrderServiceImpl implements OrderService {
 			DictValueEntity dictValueEntity = null;
 			if(null != order.getCustomerId()) {
 				customer = em.find(CustomerEntity.class, order.getCustomerId());
-				orderData.setCustomerName(customer.getName());
-				orderData.setContact(customer.getContact());
-				orderData.setMailNo(customer.getMallNo());
-				orderData.setLicenseNo(customer.getLicenseNo());
-				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.PERSIST, customer.getPersist());
-				if(null != dictValueEntity) {
-					orderData.setPersist(dictValueEntity.getName());
+				if(customer != null) {
+					orderData.setCustomerName(customer.getName());
+					orderData.setContact(customer.getContact());
+					orderData.setMailNo(customer.getMallNo());
+					orderData.setLicenseNo(customer.getLicenseNo());
+					dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.LICENSE_TYPE, customer.getLicenseType());
+					if(null != dictValueEntity) {
+						orderData.setLicenseType(dictValueEntity.getName());
+					}
+					orderData.setClientName(customer.getClientName());
+					orderData.setClientLicenseNo(customer.getClientLicenseNo());
+					dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.PERSIST, customer.getPersist());
+					if(null != dictValueEntity) {
+						orderData.setPersist(dictValueEntity.getName());
+					}
+					orderData.setLicenseAddress(customer.getLicenseAddress());
+					orderData.setAddress(customer.getAddress());
+					orderData.setRemarks(customer.getRemarks());
 				}
-				orderData.setLicenseAddress(customer.getLicenseAddress());
-				orderData.setAddress(customer.getAddress());
-				orderData.setRemarks(customer.getRemarks());
 			}
 
 			ContractEntity contract = null;
 			if(null != order.getContractId()) {
 				contract = em.find(ContractEntity.class, order.getContractId());
-				orderData.setSiteName(contract.getSiteName());
-				orderData.setContractNo(contract.getContractNo());
-				orderData.setPartyA(contract.getPartyA());
-				orderData.setPartyB(contract.getPartyB());
-				orderData.setContractStartTime(contract.getContractStartTime());
-				orderData.setContractEndTime(contract.getContractEndTime());
-				orderData.setContractAmount(contract.getContractAmount());
-				orderData.setElectricityFee(contract.getElectricityFee());
-				orderData.setStartTime(contract.getStartTime());
-				orderData.setEndTime(contract.getEndTime());
-				orderData.setElectricityCharge(contract.getElectricityCharge());
-				orderData.setElectricitySubmitType(contract.getElectricitySubmitType());
-				orderData.setElectricityPaid(contract.getElectricityPaid());
-				orderData.setPaidTime(contract.getPaidTime());
+				if(contract != null) {
+					orderData.setSiteName(contract.getSiteName());
+					orderData.setContractNo(contract.getContractNo());
+					orderData.setPartyA(contract.getPartyA());
+					orderData.setPartyB(contract.getPartyB());
+					orderData.setContractStartTime(contract.getContractStartTime());
+					orderData.setContractEndTime(contract.getContractEndTime());
+					orderData.setContractAmount(contract.getContractAmount());
+					orderData.setElectricityFee(contract.getElectricityFee());
+					orderData.setStartTime(contract.getStartTime());
+					orderData.setEndTime(contract.getEndTime());
+					orderData.setElectricityCharge(contract.getElectricityCharge());
+					orderData.setElectricitySubmitType(contract.getElectricitySubmitType());
+					orderData.setElectricityPaid(contract.getElectricityPaid());
+					orderData.setPaidTime(contract.getPaidTime());
+				}
 			}
 			OrderBroadbandEntity broadband = null;
 			if(null != order.getBroadbandId()) {
 				broadband = em.find(OrderBroadbandEntity.class, order.getBroadbandId());
-				orderData.setOperator(broadband.getOperator());
-				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.BROADBAND_TYPE, broadband.getType());
-				if(null != dictValueEntity) {
-					orderData.setType(dictValueEntity.getName());
+				if(broadband != null) {
+					orderData.setOperator(broadband.getOperator());
+					dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.BROADBAND_TYPE, broadband.getType());
+					if(null != dictValueEntity) {
+						orderData.setType(dictValueEntity.getName());
+					}
+					orderData.setPrice(broadband.getPrice());
+					orderData.setPhoneNum(broadband.getPhoneNum());
+					orderData.setVoiceTariff(broadband.getVoiceTariff());
 				}
-				orderData.setPrice(broadband.getPrice());
-				orderData.setPhoneNum(broadband.getPhoneNum());
-				orderData.setVoiceTariff(broadband.getVoiceTariff());
 			}
 			OrderChargeEntity charge = null;
 			if(null != order.getChargeId()) {
 				charge = em.find(OrderChargeEntity.class, order.getChargeId());
-				orderData.setChargeAmount(charge.getChargeAmount());
-				orderData.setChargeDate(charge.getChargeDate());
-				orderData.setNextChargeDate(charge.getNextChargeDate());
+				if(charge != null) {
+					orderData.setChargeAmount(charge.getChargeAmount());
+					orderData.setChargeDate(charge.getChargeDate());
+					orderData.setNextChargeDate(charge.getNextChargeDate());
+					dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.CHARGE_TYPE, charge.getChargeType());
+					if(dictValueEntity != null) {
+						orderData.setChargeType(dictValueEntity.getName());
+					}
+				}
 			}
 			OrderInvoiceEntity invoice = null;
 			if(null != order.getInvoiceId()) {
 				invoice = em.find(OrderInvoiceEntity.class, order.getInvoiceId());
-				orderData.setIsInvoice(invoice.getIsInvoice());
-				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.INVOICE_TYPE, invoice.getType());
-				if(null != dictValueEntity) {
-					orderData.setInvoiceType(dictValueEntity.getName());
+				if(invoice != null) {
+					orderData.setIsInvoice(invoice.getIsInvoice());
+					dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.INVOICE_TYPE, invoice.getType());
+					if(null != dictValueEntity) {
+						orderData.setInvoiceType(dictValueEntity.getName());
+					}
+					orderData.setInvoiceDate(invoice.getInvoiceDate());
+					orderData.setInvoiceNum(invoice.getInvoiceNum());
 				}
-				orderData.setInvoiceDate(invoice.getInvoiceDate());
-				orderData.setInvoiceNum(invoice.getInvoiceNum());
 			}
 			OrderOperatorEntity operator = null;
 			if(null != order.getOperatorId()) {
 				operator = em.find(OrderOperatorEntity.class, order.getOperatorId());
-				orderData.setProductNum(operator.getProductNum());
-				dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.OPERATOR_ACCOUNT_TYPE, operator.getAccountStatus());
-				if(null != dictValueEntity) {
-					orderData.setAccountStatus(dictValueEntity.getName());
+				if(operator != null) {
+					orderData.setProductNum(operator.getProductNum());
+					dictValueEntity = dictRepository.findByDictTypeIdAndValue(DictType.OPERATOR_ACCOUNT_TYPE, operator.getAccountStatus());
+					if(null != dictValueEntity) {
+						orderData.setAccountStatus(dictValueEntity.getName());
+					}
+					orderData.setInternetAccount(operator.getInternetAccount());
+					orderData.setBroadband(operator.getBroadband());
+					orderData.setOperatorPhone(operator.getPhone());
+					orderData.setPaymentCycle(operator.getPaymentCycle());
+					orderData.setPaymentDate(operator.getPaymentDate());
+					orderData.setOperatorInvoiceDate(operator.getInvoiceDate());
+					orderData.setOperatorContact(operator.getContact());
+					orderData.setRenewContract(operator.getRenewContract());
+					orderData.setOperatorInvoiceNum(operator.getInvoiceNum());
+					orderData.setPrimaryCharge(operator.getPrimaryCharge());
 				}
-				orderData.setInternetAccount(operator.getInternetAccount());
-				orderData.setBroadband(operator.getBroadband());
-				orderData.setOperatorPhone(operator.getPhone());
-				orderData.setPaymentCycle(operator.getPaymentCycle());
-				orderData.setPaymentDate(operator.getPaymentDate());
-				orderData.setOperatorInvoiceDate(operator.getInvoiceDate());
-				orderData.setOperatorContact(operator.getContact());
-				orderData.setRenewContract(operator.getRenewContract());
-				orderData.setOperatorInvoiceNum(operator.getInvoiceNum());
-				orderData.setPrimaryCharge(operator.getPrimaryCharge());
 			}
 			OrderNewBusinessEntity newBusiness = null;
 			if(null != order.getNewBusinessId()) {
 				newBusiness =  em.find(OrderNewBusinessEntity.class, order.getNewBusinessId());
-				orderData.setRequestOrder(newBusiness.getRequestOrder());
-				orderData.setMonth(newBusiness.getMonth());
-				orderData.setDate(newBusiness.getDate());
-				orderData.setCounterpart(newBusiness.getCounterpart());
+				if(newBusiness != null) {
+					orderData.setRequestOrder(newBusiness.getRequestOrder());
+					orderData.setMonth(newBusiness.getMonth());
+					orderData.setDate(newBusiness.getDate());
+					orderData.setCounterpart(newBusiness.getCounterpart());
+				}
 			}
 			orderData.setOrderNo(order.getOrderNo());
 			orderData.setOwnerProject(order.getOwnerProject());
@@ -554,6 +582,7 @@ public class OrderServiceImpl implements OrderService {
 			orderData.setIsUseNetWork(order.getIsUseNetwork());
 			orderData.setAreaNumber(order.getAreaNumber());
 			orderData.setAreaName(order.getAreaName());
+			orderData.setEntryUser(order.getEntryUser());
 			results.add(orderData);
 		}
 		return results;

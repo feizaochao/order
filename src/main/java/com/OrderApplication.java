@@ -9,7 +9,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 
 @SpringBootApplication
-public class OrderApplication extends SpringBootServletInitializer {
+public class OrderApplication extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderApplication.class, args);
@@ -18,5 +18,10 @@ public class OrderApplication extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(OrderApplication.class);
+	}
+
+	@Override
+	public void customize(ConfigurableEmbeddedServletContainer container) {
+//		container.setPort();
 	}
 }
